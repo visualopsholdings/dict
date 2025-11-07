@@ -17,6 +17,8 @@
 #include <rfl.hpp>
 #include <optional>
 
+namespace vops {
+
 typedef rfl::Generic DictG;
   // a "Generic" type containing any sort of thing.
   // under the covers reflectcpp uses a variant for this.
@@ -84,5 +86,7 @@ public:
     // given a stream, and a format the stream is in (.json, .yml) parse it.
 
 };
+
+} // vops
 
 #endif // H_dict

@@ -16,6 +16,7 @@
 #include <rfl/yaml.hpp>
 
 using namespace std;
+using namespace vops;
 namespace fs = std::filesystem;
 
 optional<string> Dict::getString(optional<DictO> obj, const string &name) {

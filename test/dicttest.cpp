@@ -18,6 +18,7 @@
 #include <boost/test/unit_test.hpp>
 
 using namespace std;
+using namespace vops;
 
 BOOST_AUTO_TEST_CASE( stringTest )
 {
