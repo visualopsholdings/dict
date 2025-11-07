@@ -13,6 +13,7 @@
 #include "dict.hpp"
 
 #include <iostream>
+#include <rfl/json.hpp>
 
 #define BOOST_AUTO_TEST_MAIN
 #include <boost/test/unit_test.hpp>
@@ -128,8 +129,6 @@ BOOST_AUTO_TEST_CASE( vectorTest )
   BOOST_CHECK(obj);
   
 }
-
-
 
 
 

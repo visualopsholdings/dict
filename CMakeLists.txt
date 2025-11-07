@@ -33,3 +33,8 @@ add_executable(DictTest test/dicttest.cpp)
   target_link_libraries(DictTest DictLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
 add_test(DictTest DictTest)
+
+add_executable(ConceptTest test/concepttest.cpp)
+  target_link_libraries(ConceptTest DictLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+
+add_test(ConceptTest ConceptTest)
