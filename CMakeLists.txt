@@ -24,7 +24,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include_directories(include)
 
-add_executable(SimpleTest test/simpletest.cpp src/dict.cpp)
-  target_link_libraries(SimpleTest reflectcpp yaml-cpp::yaml-cpp ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+add_executable(DictTest test/dicttest.cpp src/dict.cpp)
+  target_link_libraries(DictTest reflectcpp yaml-cpp::yaml-cpp ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
-add_test(SimpleTest SimpleTest)
+add_test(DictTest DictTest)
