@@ -80,7 +80,7 @@ sudo make install
 Build this project:
 
 ```
-git clone https://github.com/visualops/dict.git
+git clone https://github.com/visualopsholdings/dict.git
 cd dict
 mkdir build
 cd build
