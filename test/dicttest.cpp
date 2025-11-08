@@ -140,7 +140,16 @@ BOOST_AUTO_TEST_CASE( initialisation )
       }) 
     }
   })};
-  cout << Dict::toString(o) << endl;
+  auto s = Dict::toString(o);
+  struct Obj {
+    struct {
+      vector<string> yyy;
+    } xxx;
+  };
+  auto result = rfl::json::read<Obj>(s);
+  BOOST_CHECK(result);
+  BOOST_CHECK_EQUAL(result->xxx.yyy.size(), 3);
+  BOOST_CHECK_EQUAL(result->xxx.yyy[0], "aaa");
 
 }
 
