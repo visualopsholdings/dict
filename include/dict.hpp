@@ -87,6 +87,22 @@ public:
 
 };
 
+// a really helpful function for initialising DictO's because they don't accept
+// map initilisers.
+// this allows:
+//   DictO o{makeDictO({ 
+//     { "xxx", makeDictO({ 
+//         {"yyy", DictV{ "aaa", "bbb", "ccc"} } 
+//       }) 
+//     }
+//   })};
+
+inline DictO makeDictO(const std::map<std::string, DictG> &map) {
+  DictO o;
+  for_each(map.begin(), map.end(), [&o](auto e) { o[get<0>(e)] = get<1>(e); });
+  return o;
+}
+
 } // vops
 
 #endif // H_dict

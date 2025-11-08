@@ -130,6 +130,21 @@ BOOST_AUTO_TEST_CASE( vectorTest )
   
 }
 
+BOOST_AUTO_TEST_CASE( initialisation )
+{
+  cout << "=== initialisation ===" << endl;
+
+  DictO o{makeDictO({ 
+    { "xxx", makeDictO({ 
+        {"yyy", DictV{ "aaa", "bbb", "ccc"} } 
+      }) 
+    }
+  })};
+  cout << Dict::toString(o) << endl;
+
+}
+
+
 
 
 

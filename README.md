@@ -101,3 +101,8 @@ Dict is licensed under [version 3 of the GNU General Public License] contained i
 
 - Broke "dict" out from flo::Generic and made it it's own project.
 
+### 8-Nov-2025
+
+- add "makeDictO" to allow dictionary initialisation.
+
+

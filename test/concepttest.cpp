@@ -228,8 +228,20 @@ BOOST_AUTO_TEST_CASE( customReflection )
 
 }
 
+BOOST_AUTO_TEST_CASE( reflectionIn )
+{
+  cout << "=== reflectionIn ===" << endl;
 
+  struct Obj {
+    string a;
+    string b;
+    long c;
+  };
+  auto result = rfl::json::read<Obj>("{\"a\":\"x\",\"b\":\"y\",\"c\":10}");
+  BOOST_CHECK(result);
+  BOOST_CHECK_EQUAL(result->a, "x");
+  BOOST_CHECK_EQUAL(result->b, "y");
+  BOOST_CHECK_EQUAL(result->c, 10);
 
-
-
+}
 
