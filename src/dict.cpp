@@ -169,6 +169,15 @@ optional<string> Dict::getString(const DictG &obj) {
   
 }
 
+optional<string> Dict::getString(rfl::Result<DictG> result) {
+
+  if (!result) {
+    return nullopt;
+  }
+  return getString(*result);
+  
+}
+
 optional<long> Dict::getNum(const DictG &obj) {
 
   optional<long> i;
@@ -183,6 +192,15 @@ optional<long> Dict::getNum(const DictG &obj) {
   
 }
 
+optional<long> Dict::getNum(rfl::Result<DictG> result) {
+
+  if (!result) {
+    return nullopt;
+  }
+  return getNum(*result);
+  
+}
+
 optional<bool> Dict::getBool(const DictG &obj) {
 
   optional<bool> b;
@@ -194,6 +212,15 @@ optional<bool> Dict::getBool(const DictG &obj) {
   }, obj.variant());
 
   return b;
+  
+}
+
+optional<bool> Dict::getBool(rfl::Result<DictG> result) {
+
+  if (!result) {
+    return nullopt;
+  }
+  return getBool(*result);
   
 }
 

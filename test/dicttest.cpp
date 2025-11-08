@@ -153,6 +153,24 @@ BOOST_AUTO_TEST_CASE( initialisation )
 
 }
 
+BOOST_AUTO_TEST_CASE( extraFields )
+{
+  cout << "=== extraFields ===" << endl;
+
+  struct Obj {
+    rfl::ExtraFields<rfl::Generic> extra_fields;
+  };
+  auto result = rfl::json::read<Obj>("{\"user\":\"6121bdfaec9e5a059715739c\"}");
+  BOOST_CHECK(result);
+  BOOST_CHECK_EQUAL(result->extra_fields.size(), 1);
+  auto a = result->extra_fields.get("user");
+  auto s = Dict::getString(a);
+  BOOST_CHECK(s);
+  BOOST_CHECK_EQUAL(*s, "6121bdfaec9e5a059715739c");
+
+}
+
+
 
 
 

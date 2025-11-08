@@ -40,12 +40,15 @@ public:
     // given a generic object, get an Object out of it.
     
   static std::optional<std::string> getString(const DictG &obj);
+  static std::optional<std::string> getString(rfl::Result<DictG> result);
     // given a generic object, get a string out of it.
     
   static std::optional<long> getNum(const DictG &obj);
+  static std::optional<long> getNum(rfl::Result<DictG> result);
     // given a generic object, get a long out of it.
     
   static std::optional<bool> getBool(const DictG &obj);
+  static std::optional<bool> getBool(rfl::Result<DictG> result);
     // given a generic object, get a boolean out of it.
     
   static bool isVector(const DictG &obj);
