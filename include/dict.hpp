@@ -57,26 +57,32 @@ public:
   static std::optional<DictV> getVector(const DictG &obj);
     // given a generic object, get a vector out of it.
 
+  static std::optional<DictO> getObjectG(std::optional<DictG> g, const std::string &name);
   static std::optional<DictO> getObject(std::optional<DictO> dict, const std::string &name);
     // get an object out of the dictionary with the property name.
     // This is chainable.
     
+  static std::optional<DictG> getGenericG(std::optional<DictG> g, const std::string &name);
   static std::optional<DictG> getGeneric(std::optional<DictO> dict, const std::string &name);
     // get a generic out of the dictionary with the property name.
     // This is chainable.
     
+  static std::optional<std::string> getStringG(std::optional<DictG> g, const std::string &name);
   static std::optional<std::string> getString(std::optional<DictO> dict, const std::string &name);
     // get a string out of the dictionary with the property name.
     // This is chainable.
     
+  static std::optional<long> getNumG(std::optional<DictG> g, const std::string &name);
   static std::optional<long> getNum(std::optional<DictO> dict, const std::string &name);
     // get a long out of the dictionary with the property name.
     // This is chainable.
     
+  static std::optional<bool> getBoolG(std::optional<DictG> g, const std::string &name);
   static std::optional<bool> getBool(std::optional<DictO> dict, const std::string &name);
     // get a bool out of the dictionary with the property name.
     // This is chainable.
     
+  static std::optional<DictV> getVectorG(std::optional<DictG> g, const std::string &name);
   static std::optional<DictV> getVector(std::optional<DictO> dict, const std::string &name);
     // get a string out of the dictionary with the property name.
     // This is chainable.

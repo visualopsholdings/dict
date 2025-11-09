@@ -35,6 +35,19 @@ BOOST_AUTO_TEST_CASE( stringTest )
   
 }
 
+BOOST_AUTO_TEST_CASE( stringGTest )
+{
+  cout << "=== stringGTest ===" << endl;
+  
+  DictG g = dictO({{ "hello", "world" }});
+  
+  auto hello = Dict::getStringG(g, "hello");
+  
+  BOOST_CHECK(hello);
+  BOOST_CHECK_EQUAL(*hello, "world");
+  
+}
+
 BOOST_AUTO_TEST_CASE( notString )
 {
   cout << "=== notString ===" << endl;

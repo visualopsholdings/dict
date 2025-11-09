@@ -34,6 +34,20 @@ optional<string> Dict::getString(optional<DictO> obj, const string &name) {
   
 }
 
+optional<string> Dict::getStringG(optional<DictG> g, const string &name) {
+
+  if (!g) {
+    return nullopt;
+  }
+  auto obj = getObject(*g);
+  if (!obj) {
+    return nullopt;
+  }
+  
+  return getString(*obj, name);
+  
+}
+
 optional<long> Dict::getNum(optional<DictO> obj, const string &name) {
 
   if (!obj) {
@@ -46,6 +60,20 @@ optional<long> Dict::getNum(optional<DictO> obj, const string &name) {
   }
   
   return getNum(*prop);
+  
+}
+
+optional<long> Dict::getNumG(optional<DictG> g, const string &name) {
+
+  if (!g) {
+    return nullopt;
+  }
+  auto obj = getObject(*g);
+  if (!obj) {
+    return nullopt;
+  }
+  
+  return getNumG(*obj, name);
   
 }
 
@@ -64,6 +92,20 @@ optional<bool> Dict::getBool(optional<DictO> obj, const string &name) {
   
 }
 
+optional<bool> Dict::getBoolG(optional<DictG> g, const string &name) {
+
+  if (!g) {
+    return nullopt;
+  }
+  auto obj = getObject(*g);
+  if (!obj) {
+    return nullopt;
+  }
+  
+  return getBool(*obj, name);
+  
+}
+
 optional<DictO> Dict::getObject(optional<DictO> obj, const string &name) {
 
   if (!obj) {
@@ -76,6 +118,20 @@ optional<DictO> Dict::getObject(optional<DictO> obj, const string &name) {
   }
   
   return getObject(*prop);
+  
+}
+
+optional<DictO> Dict::getObjectG(optional<DictG> g, const string &name) {
+
+  if (!g) {
+    return nullopt;
+  }
+  auto obj = getObject(*g);
+  if (!obj) {
+    return nullopt;
+  }
+  
+  return getObject(*obj, name);
   
 }
 
@@ -94,6 +150,20 @@ optional<DictG> Dict::getGeneric(optional<DictO> obj, const string &name) {
   
 }
 
+optional<DictG> Dict::getGenericG(optional<DictG> g, const string &name) {
+
+  if (!g) {
+    return nullopt;
+  }
+  auto obj = getObject(*g);
+  if (!obj) {
+    return nullopt;
+  }
+  
+  return getGeneric(*obj, name);
+  
+}
+
 optional<DictV> Dict::getVector(optional<DictO> obj, const string &name) {
 
   if (!obj) {
@@ -106,6 +176,20 @@ optional<DictV> Dict::getVector(optional<DictO> obj, const string &name) {
   }
   
   return getVector(*prop);
+  
+}
+
+optional<DictV> Dict::getVectorG(optional<DictG> g, const string &name) {
+
+  if (!g) {
+    return nullopt;
+  }
+  auto obj = getObject(*g);
+  if (!obj) {
+    return nullopt;
+  }
+  
+  return getVector(*obj, name);
   
 }
 
