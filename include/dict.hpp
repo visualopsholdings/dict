@@ -84,8 +84,15 @@ public:
   static std::string toString(const DictG &g, const std::string &format=".json");
     // dump the generic out as JSON or YML.
 
-  static std::optional<DictG> parseString(const std::string &s, const std::string &format=".json");
-  static std::optional<DictG> parseStream(std::istream &s, const std::string &format=".json");
+  template<typename T>
+  static std::optional<DictG> parse(T &s, const std::string &format);
+  
+  static std::optional<DictG> parseString(const std::string &s, const std::string &format=".json") {
+    return parse(s, format);
+  }
+  static std::optional<DictG> parseStream(std::istream &s, const std::string &format=".json") {
+    return parse(s, format);
+  }
   static std::optional<DictG> parseFile(const std::string &fn);
     // given a stream, and a format the stream is in (.json, .yml) parse it.
     
