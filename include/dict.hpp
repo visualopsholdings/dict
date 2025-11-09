@@ -87,12 +87,8 @@ public:
   template<typename T>
   static std::optional<DictG> parse(T &s, const std::string &format);
   
-  static std::optional<DictG> parseString(std::string &s, const std::string &format=".json") {
-    return parse(s, format);
-  }
-  static std::optional<DictG> parseStream(std::istream &s, const std::string &format=".json") {
-    return parse(s, format);
-  }
+  static std::optional<DictG> parseString(std::string &s, const std::string &format=".json");
+  static std::optional<DictG> parseStream(std::istream &s, const std::string &format=".json");
   static std::optional<DictG> parseFile(const std::string &fn);
     // given a stream, and a format the stream is in (.json, .yml) parse it.
     

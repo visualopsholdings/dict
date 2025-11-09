@@ -264,6 +264,14 @@ optional<DictG> Dict::parse(T &s, const string &format) {
 
 }
 
+std::optional<DictG> Dict::parseString(std::string &s, const std::string &format) {
+  return parse(s, format);
+}
+
+std::optional<DictG> Dict::parseStream(std::istream &s, const std::string &format) {
+  return parse(s, format);
+}
+
 optional<DictG> Dict::parseFile(const string &fn) {
 
   fs::path p = fn;
