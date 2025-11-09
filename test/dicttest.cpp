@@ -134,8 +134,8 @@ BOOST_AUTO_TEST_CASE( initialisation )
 {
   cout << "=== initialisation ===" << endl;
 
-  DictO o{makeDictO({ 
-    { "xxx", makeDictO({ 
+  DictO o{dictO({ 
+    { "xxx", dictO({ 
         {"yyy", DictV{ "aaa", "bbb", "ccc"} } 
       }) 
     }
