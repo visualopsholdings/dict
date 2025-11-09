@@ -37,6 +37,7 @@ class Dict {
 public:
 
   static std::optional<DictO> getObject(const DictG &obj);
+  static std::optional<DictO> getObject(rfl::Result<DictG> result);
     // given a generic object, get an Object out of it.
     
   static std::optional<std::string> getString(const DictG &obj);
@@ -55,6 +56,7 @@ public:
     // Return true IF this is a vector.
 
   static std::optional<DictV> getVector(const DictG &obj);
+  static std::optional<DictV> getVector(rfl::Result<DictG> result);
     // given a generic object, get a vector out of it.
 
   static std::optional<DictO> getObjectG(std::optional<DictG> g, const std::string &name);

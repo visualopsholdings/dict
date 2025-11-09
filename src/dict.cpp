@@ -208,6 +208,15 @@ optional<DictO> Dict::getObject(const DictG &obj) {
   
 }
 
+optional<DictO> Dict::getObject(rfl::Result<DictG> result) {
+
+  if (!result) {
+    return nullopt;
+  }
+  return getObject(*result);
+  
+}
+
 bool Dict::isVector(const DictG &obj) {
 
   bool found = false;
@@ -235,6 +244,15 @@ optional<DictV> Dict::getVector(const DictG &obj) {
   }, obj.variant());
 
   return v;
+  
+}
+
+optional<DictV> Dict::getVector(rfl::Result<DictG> result) {
+
+  if (!result) {
+    return nullopt;
+  }
+  return getVector(*result);
   
 }
 
