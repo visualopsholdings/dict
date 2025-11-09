@@ -84,10 +84,11 @@ public:
   static std::string toString(const DictG &g, const std::string &format=".json");
     // dump the generic out as JSON or YML.
 
+  static std::optional<DictG> parseString(const std::string &s, const std::string &format=".json");
   static std::optional<DictG> parseStream(std::istream &s, const std::string &format=".json");
   static std::optional<DictG> parseFile(const std::string &fn);
     // given a stream, and a format the stream is in (.json, .yml) parse it.
-
+    
 };
 
 // a really helpful function for initialising DictO's because they don't accept

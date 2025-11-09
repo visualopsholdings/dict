@@ -239,6 +239,30 @@ string Dict::toString(const DictG &g, const string &format) {
 
 }
 
+optional<DictG> Dict::parseString(const string &s, const string &format) {
+
+  if (format == ".json") {
+    auto g = rfl::json::read<DictG>(s);
+    if (g) {
+      return *g;
+    }
+  }
+  else if (format == ".yml") {
+    auto g = rfl::yaml::read<DictG>(s);
+    if (g) {
+      return *g;
+    }
+  }
+  else {
+    cerr << "invalid format " << format << endl;
+    return nullopt;
+  }
+  
+  cerr << "could not parse string to " << format << endl;
+  return nullopt;
+
+}
+
 optional<DictG> Dict::parseStream(istream &s, const string &format) {
 
   if (format == ".json") {
