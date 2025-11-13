@@ -100,6 +100,10 @@ public:
   static std::optional<DictG> parseFile(const std::string &fn);
     // given a stream, and a format the stream is in (.json, .yml) parse it.
     
+  static std::optional<DictG> find_pointer(const DictG &g, const std::string &path);
+  static std::optional<DictG> set_at_pointer(const DictG &g, const std::string &path, const DictG &value);
+    // boost::json style find pointer, except set_at_pointer returns a new value.
+    
 };
 
 // a really helpful function for initialising DictO's because they don't accept

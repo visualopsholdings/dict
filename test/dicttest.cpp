@@ -1,5 +1,5 @@
 /*
-  simpletest.cpp
+  dicttest.cpp
   
   Author: Paul Hamilton (paul@visualops.com)
   Date: 7-Nov-2025

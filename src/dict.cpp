@@ -366,11 +366,11 @@ optional<DictG> Dict::parse(T &s, const string &format) {
 
 }
 
-std::optional<DictG> Dict::parseString(std::string &s, const std::string &format) {
+optional<DictG> Dict::parseString(string &s, const string &format) {
   return parse(s, format);
 }
 
-std::optional<DictG> Dict::parseStream(std::istream &s, const std::string &format) {
+optional<DictG> Dict::parseStream(istream &s, const string &format) {
   return parse(s, format);
 }
 
@@ -398,4 +398,12 @@ optional<DictG> Dict::parseFile(const string &fn) {
   cerr << "could not parse stream to " << p.extension() << endl;
   return nullopt;
   
+}
+
+optional<DictG> Dict::find_pointer(const DictG &g, const string &path) {
+  return nullopt;
+}
+
+optional<DictG> Dict::set_at_pointer(const DictG &g, const string &path, const DictG &value) {
+  return nullopt;
 }
