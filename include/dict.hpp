@@ -103,7 +103,13 @@ public:
   static std::optional<DictG> find_pointer(const DictG &g, const std::string &path);
   static std::optional<DictG> set_at_pointer(const DictG &g, const std::string &path, const DictG &value);
     // boost::json style find pointer, except set_at_pointer returns a new value.
-    
+
+private:    
+
+  static std::optional<DictG> getGPath(const DictG &g, const std::string &path);
+  static std::optional<DictG> getVecPath(const DictV &v, const std::string &path);
+  static std::optional<DictG> getObjPath(const DictO &obj, const std::string &path);
+
 };
 
 // a really helpful function for initialising DictO's because they don't accept

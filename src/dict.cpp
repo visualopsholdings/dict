@@ -400,8 +400,96 @@ optional<DictG> Dict::parseFile(const string &fn) {
   
 }
 
+bool extractPath(const string &path, string *loc, string *remain) {
+
+  if (path.size() == 0) {
+    cerr << "path is empty" << endl;
+    return false;
+  }
+  if (path[0] != '/') {
+    cerr << "path must start with /" << endl;
+    return false;
+  }
+  
+  auto rem = path.substr(1);
+  auto slash = rem.find('/');
+  *loc = rem.substr(0, slash);
+  *remain = slash == string::npos ? "" : rem.substr(slash);
+  return true;
+  
+}
+
+optional<DictG> Dict::getVecPath(const DictV &v, const string &path) {
+
+  string loc;
+  string remain;
+  if (!extractPath(path, &loc, &remain)) {
+    return nullopt;
+  }
+  
+  int index;
+  stringstream ss(loc);
+  ss >> index;
+
+  if (index >= v.size()) {
+    cerr << "index beyind end of vector " << index << endl;
+    return nullopt;
+  }
+  
+  auto subobj = v[index];
+  
+  if (remain.size() > 0) {
+    return getGPath(subobj, remain);
+  }
+
+  return subobj;
+  
+}
+
+optional<DictG> Dict::getObjPath(const DictO &obj, const string &path) {
+
+  string loc;
+  string remain;
+  if (!extractPath(path, &loc, &remain)) {
+    return nullopt;
+  }
+  
+  auto subobj = obj.get(loc);
+
+  if (!subobj.has_value()) {
+    cerr << subobj.error().what() << endl;
+    return nullopt;
+  }
+  
+  
+  if (remain.size() > 0) {
+    return getGPath(subobj.value(), remain);
+  }
+  
+  return subobj.value();
+
+}
+
+optional<DictG> Dict::getGPath(const DictG &g, const string &path) {
+
+  auto obj = Dict::getObject(g);
+  if (!obj) {
+    auto vec = Dict::getVector(g);
+    if (!vec) {
+      cerr << "only objects and vectors supported" << endl;
+      return nullopt;
+    }
+    return getVecPath(*vec, path);
+  }
+
+  return getObjPath(*obj, path);
+  
+}
+
 optional<DictG> Dict::find_pointer(const DictG &g, const string &path) {
-  return nullopt;
+
+  return getGPath(g, path);
+
 }
 
 optional<DictG> Dict::set_at_pointer(const DictG &g, const string &path, const DictG &value) {

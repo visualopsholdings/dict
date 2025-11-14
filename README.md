@@ -89,7 +89,30 @@ make
 make test
 ```
 
-## Usage
+## Interactive debugging on a Mac
+
+There is a cool little script you can use like this in a command window:
+
+```
+cd build
+../run.sh ../test ./PtrTest simple
+```
+
+This will monitor the "test" directory for changes to a file, if it finds them it will do a "make" and then if that is successful it will run the program "./TestSpatial" specifying the test "scaleAndCenter" to run.
+
+You can split your screen to see this command window and your text editor and interactively make changes, save and see results :-)
+
+If you want to compile things that change in the source dir, just change the command to
+
+```
+../run.sh ../src ./PtrTest simple
+```
+
+You will need:
+
+```
+brew install fswatch
+```
 
 ## License
 
@@ -108,5 +131,9 @@ Dict is licensed under [version 3 of the GNU General Public License] contained i
 ### 13-Nov-2025
 
 - Start in on "set_at_pointer" and "find_pointer".
+
+### 14-Nov-2025
+
+- Implement find_pointer.
 
 

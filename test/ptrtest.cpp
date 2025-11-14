@@ -21,9 +21,111 @@
 using namespace std;
 using namespace vops;
 
-BOOST_AUTO_TEST_CASE( find_pointer )
+BOOST_AUTO_TEST_CASE( findObjSimple )
 {
-  cout << "=== find_pointer ===" << endl;
+  cout << "=== findObjSimple ===" << endl;
+  
+  auto input = dictO({
+    { "aaa", "bbb" }
+  });
+  string path = "/aaa";
+  auto result = Dict::find_pointer(input, path);
+  BOOST_CHECK(result);
+  auto sss = Dict::getString(*result);
+  BOOST_CHECK(sss);
+  BOOST_CHECK_EQUAL(*sss, "bbb");
+
+}
+  
+BOOST_AUTO_TEST_CASE( findObjPaths )
+{
+  cout << "=== findObjPaths ===" << endl;
+  
+  auto input = dictO({
+    { "aaa", dictO({
+      { "bbb", dictO({
+        { "ccc", dictO({
+          { "ddd", "eee" }
+          })  
+        }
+        })  
+      }
+      }) 
+    }
+  });
+  string path = "/aaa/bbb/ccc/ddd";
+  auto result = Dict::find_pointer(input, path);
+  BOOST_CHECK(result);
+  auto sss = Dict::getString(*result);
+  BOOST_CHECK(sss);
+  BOOST_CHECK_EQUAL(*sss, "eee");
+
+}
+  
+BOOST_AUTO_TEST_CASE( findVecSimple )
+{
+  cout << "=== findVecSimple ===" << endl;
+  
+  auto input = DictV({ "aaa", "bbb" });
+  string path = "/1";
+  auto result = Dict::find_pointer(input, path);
+  BOOST_CHECK(result);
+  auto sss = Dict::getString(*result);
+  BOOST_CHECK(sss);
+  BOOST_CHECK_EQUAL(*sss, "bbb");
+
+}
+  
+BOOST_AUTO_TEST_CASE( findVecPaths )
+{
+  cout << "=== findVecPaths ===" << endl;
+  
+  auto input = dictO({
+    { "aaa", DictV{
+      dictO({ 
+        { "bbb", dictO({
+          { "ccc", DictV{ "ddd", "eee" } }
+        })  
+        }
+      })
+    }
+    }
+  });
+
+  string path = "/aaa/0/bbb/ccc/1";
+  auto result = Dict::find_pointer(input, path);
+  BOOST_CHECK(result);
+  auto sss = Dict::getString(*result);
+  BOOST_CHECK(sss);
+  BOOST_CHECK_EQUAL(*sss, "eee");
+
+}
+  
+BOOST_AUTO_TEST_CASE( findVecIndexError )
+{
+  cout << "=== findVecIndexError ===" << endl;
+  
+  auto input = dictO({
+    { "aaa", DictV{
+      dictO({ 
+        { "bbb", dictO({
+          { "ccc", DictV{ "ddd", "eee" } }
+        })  
+        }
+      })
+    }
+    }
+  });
+
+  string path = "/aaa/1/bbb/ccc/1";
+  auto result = Dict::find_pointer(input, path);
+  BOOST_CHECK(!result);
+
+}
+  
+BOOST_AUTO_TEST_CASE( findComplex )
+{
+  cout << "=== findComplex ===" << endl;
   
   DictV empty;
   auto input = dictO({
@@ -48,15 +150,19 @@ BOOST_AUTO_TEST_CASE( find_pointer )
   string path = "/accesses/2/users";
   
   auto result = Dict::find_pointer(input, path);
-  BOOST_CHECK(!result);
-  
-//  auto out = DictV{"667d0baedfb1ed18430d8ed3","667d0baedfb1ed18430d8ed4"};
+  BOOST_CHECK(result);
+  auto v = Dict::getVector(*result);
+  BOOST_CHECK(v);
+  BOOST_CHECK_EQUAL(v->size(), 2);
+  BOOST_CHECK_EQUAL(*Dict::getString((*v)[0]), "667d0baedfb1ed18430d8ed3");
+  BOOST_CHECK_EQUAL(*Dict::getString((*v)[1]), "667d0baedfb1ed18430d8ed4");
+//  cout << Dict::toString(*result) << endl;
   
 }
 
-BOOST_AUTO_TEST_CASE( set_at_pointer )
+BOOST_AUTO_TEST_CASE( setComplex )
 {
-  cout << "=== set_at_pointer ===" << endl;
+  cout << "=== setComplex ===" << endl;
   
   DictV empty;
   auto input = dictO({
