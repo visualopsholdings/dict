@@ -14,6 +14,7 @@
 #include <rfl.hpp>
 #include <rfl/json.hpp>
 #include <rfl/yaml.hpp>
+#include <boost/log/trivial.hpp>
 
 using namespace std;
 using namespace vops;
@@ -335,7 +336,7 @@ string Dict::toString(const DictG &g, const string &format) {
     return rfl::yaml::write(g);
   }
   else {
-    cerr << "invalid format " << format << endl;
+    BOOST_LOG_TRIVIAL(error) << "invalid format " << format;
     return "???";
   }
 
@@ -357,11 +358,11 @@ optional<DictG> Dict::parse(T &s, const string &format) {
     }
   }
   else {
-    cerr << "invalid format " << format << endl;
+    BOOST_LOG_TRIVIAL(error) << "invalid format " << format;
     return nullopt;
   }
   
-  cerr << "could not parse string to " << format << endl;
+  BOOST_LOG_TRIVIAL(error) << "could not parse string to " << format;
   return nullopt;
 
 }
@@ -391,11 +392,11 @@ optional<DictG> Dict::parseFile(const string &fn) {
     }
   }
   else {
-    cerr << "invalid format " << p.extension() << endl;
+    BOOST_LOG_TRIVIAL(error) << "invalid format " << p.extension();
     return nullopt;
   }
   
-  cerr << "could not parse stream to " << p.extension() << endl;
+  BOOST_LOG_TRIVIAL(error) << "could not parse stream to " << p.extension();
   return nullopt;
   
 }
@@ -403,11 +404,11 @@ optional<DictG> Dict::parseFile(const string &fn) {
 bool extractPath(const string &path, string *loc, string *remain) {
 
   if (path.size() == 0) {
-    cerr << "path is empty" << endl;
+    BOOST_LOG_TRIVIAL(error) << "path is empty";
     return false;
   }
   if (path[0] != '/') {
-    cerr << "path must start with /" << endl;
+    BOOST_LOG_TRIVIAL(error) << "path must start with /";
     return false;
   }
   
@@ -432,7 +433,7 @@ optional<DictG> Dict::getVecPath(const DictV &v, const string &path) {
   ss >> index;
 
   if (index >= v.size()) {
-    cerr << "index beyind end of vector " << index << endl;
+    BOOST_LOG_TRIVIAL(error) << "index beyind end of vector " << index;
     return nullopt;
   }
   
@@ -457,7 +458,7 @@ optional<DictG> Dict::getObjPath(const DictO &obj, const string &path) {
   auto subobj = obj.get(loc);
 
   if (!subobj.has_value()) {
-    cerr << subobj.error().what() << endl;
+    BOOST_LOG_TRIVIAL(error) << subobj.error().what();
     return nullopt;
   }
   
@@ -476,7 +477,7 @@ optional<DictG> Dict::getGPath(const DictG &g, const string &path) {
   if (!obj) {
     auto vec = Dict::getVector(g);
     if (!vec) {
-      cerr << "only objects and vectors supported" << endl;
+      BOOST_LOG_TRIVIAL(error) << "only objects and vectors supported";
       return nullopt;
     }
     return getVecPath(*vec, path);
@@ -492,6 +493,130 @@ optional<DictG> Dict::find_pointer(const DictG &g, const string &path) {
 
 }
 
+optional<DictG> setGPath(const DictG &g, const string &path, const DictG &value);
+
+optional<DictO> setObjPath(const DictO &obj, const string &path, const DictG &value) {
+
+  BOOST_LOG_TRIVIAL(trace) << "setObjPath " << path << ", " << Dict::toString(value);
+
+  string loc;
+  string remain;
+  if (!extractPath(path, &loc, &remain)) {
+    return nullopt;
+  }
+
+//  BOOST_LOG_TRIVIAL(trace) << loc << ", " << remain;
+
+  DictO newobj;
+  
+  // copy all other fields.
+  for (auto e: obj) {
+    if (get<0>(e) != loc) {
+      newobj[get<0>(e)] = get<1>(e);
+    }
+  }
+  
+  if (remain.size() > 0) {
+//    BOOST_LOG_TRIVIAL(trace) << Dict::toString(obj);
+    auto o = obj.get(loc);
+    if (!o) {
+      BOOST_LOG_TRIVIAL(error) << loc << " not found";
+      return nullopt;
+    }
+    auto result = setGPath(*o, remain, value);
+    newobj[loc] = *result;
+    return newobj;
+  }
+  
+  newobj[loc] = value;
+  
+  return newobj;
+  
+}
+
+optional<DictV> setVecPath(const DictV &v, const string &path, const DictG &value) {
+
+  BOOST_LOG_TRIVIAL(trace) << "setVecPath " << path << ", " << Dict::toString(value);
+//  BOOST_LOG_TRIVIAL(trace) << Dict::toString(v);
+
+  string loc;
+  string remain;
+  if (!extractPath(path, &loc, &remain)) {
+    return nullopt;
+  }
+
+//  BOOST_LOG_TRIVIAL(trace) << loc << ", " << remain;
+
+  int index;
+  stringstream ss(loc);
+  ss >> index;
+
+  if (index >= v.size()) {
+    BOOST_LOG_TRIVIAL(error) << "index beyind end of vector " << index;
+    return nullopt;
+  }
+  
+  DictV newv;
+  
+  // copy all other indexes.
+  int i=0;
+  for (auto e: v) {
+    if (i != index) {
+      newv.push_back(e);
+    }
+    else {
+      newv.push_back(0);
+    }
+    i++;
+  }
+  
+  if (remain.size() > 0) {
+//    BOOST_LOG_TRIVIAL(trace) << Dict::toString(v[index]);
+    auto result = setGPath(v[index], remain, value);
+    if (!result) {
+      return nullopt;
+    }
+    newv[index] = *result;
+    return newv;
+  }
+  
+//  BOOST_LOG_TRIVIAL(trace) << "before " << Dict::toString(newv);
+  newv[index] = value;
+//  BOOST_LOG_TRIVIAL(trace) << "after " << Dict::toString(newv);
+  
+  return newv;
+
+}
+
+optional<DictG> setGPath(const DictG &g, const string &path, const DictG &value) {
+
+  BOOST_LOG_TRIVIAL(trace) << "setGPath " << path << ", " << Dict::toString(value);
+
+  auto obj = Dict::getObject(g);
+  if (!obj) {
+    auto vec = Dict::getVector(g);
+    if (!vec) {
+      BOOST_LOG_TRIVIAL(error) << "only objects and vectors supported";
+      return nullopt;
+    }
+    auto result = setVecPath(*vec, path, value);
+    if (!result) {
+      return nullopt;
+    }
+    return *result;
+  }
+  
+  auto result = setObjPath(*obj, path, value);
+  if (!result) {
+    return nullopt;
+  }
+  return *result;
+  
+}
+
 optional<DictG> Dict::set_at_pointer(const DictG &g, const string &path, const DictG &value) {
-  return nullopt;
+
+  return setGPath(g, path, value);
+  
+
 }

@@ -128,12 +128,8 @@ Dict is licensed under [version 3 of the GNU General Public License] contained i
 
 - add "makeDictO" to allow dictionary initialisation.
 
-### 13-Nov-2025
+### 13-Nov-2025 to 15-Nov-2025
 
-- Start in on "set_at_pointer" and "find_pointer".
-
-### 14-Nov-2025
-
-- Implement find_pointer.
+- Implement find_pointer and set_at_pointer.
 
 
