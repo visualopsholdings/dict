@@ -109,6 +109,9 @@ private:
   static std::optional<DictG> getGPath(const DictG &g, const std::string &path);
   static std::optional<DictG> getVecPath(const DictV &v, const std::string &path);
   static std::optional<DictG> getObjPath(const DictO &obj, const std::string &path);
+  static std::optional<DictG> setGPath(const DictG &g, const std::string &path, const DictG &value);
+  static std::optional<DictO> setObjPath(const DictO &obj, const std::string &path, const DictG &value);
+  static std::optional<DictV> setVecPath(const DictV &v, const std::string &path, const DictG &value);
 
 };
 

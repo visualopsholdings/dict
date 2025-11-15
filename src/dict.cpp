@@ -493,11 +493,9 @@ optional<DictG> Dict::find_pointer(const DictG &g, const string &path) {
 
 }
 
-optional<DictG> setGPath(const DictG &g, const string &path, const DictG &value);
+optional<DictO> Dict::setObjPath(const DictO &obj, const string &path, const DictG &value) {
 
-optional<DictO> setObjPath(const DictO &obj, const string &path, const DictG &value) {
-
-  BOOST_LOG_TRIVIAL(trace) << "setObjPath " << path << ", " << Dict::toString(value);
+//  BOOST_LOG_TRIVIAL(trace) << "setObjPath " << path << ", " << toString(value);
 
   string loc;
   string remain;
@@ -517,7 +515,7 @@ optional<DictO> setObjPath(const DictO &obj, const string &path, const DictG &va
   }
   
   if (remain.size() > 0) {
-//    BOOST_LOG_TRIVIAL(trace) << Dict::toString(obj);
+//    BOOST_LOG_TRIVIAL(trace) << toString(obj);
     auto o = obj.get(loc);
     if (!o) {
       BOOST_LOG_TRIVIAL(error) << loc << " not found";
@@ -534,10 +532,10 @@ optional<DictO> setObjPath(const DictO &obj, const string &path, const DictG &va
   
 }
 
-optional<DictV> setVecPath(const DictV &v, const string &path, const DictG &value) {
+optional<DictV> Dict::setVecPath(const DictV &v, const string &path, const DictG &value) {
 
-  BOOST_LOG_TRIVIAL(trace) << "setVecPath " << path << ", " << Dict::toString(value);
-//  BOOST_LOG_TRIVIAL(trace) << Dict::toString(v);
+//  BOOST_LOG_TRIVIAL(trace) << "setVecPath " << path << ", " << toString(value);
+//  BOOST_LOG_TRIVIAL(trace) << toString(v);
 
   string loc;
   string remain;
@@ -571,7 +569,7 @@ optional<DictV> setVecPath(const DictV &v, const string &path, const DictG &valu
   }
   
   if (remain.size() > 0) {
-//    BOOST_LOG_TRIVIAL(trace) << Dict::toString(v[index]);
+//    BOOST_LOG_TRIVIAL(trace) << toString(v[index]);
     auto result = setGPath(v[index], remain, value);
     if (!result) {
       return nullopt;
@@ -580,21 +578,21 @@ optional<DictV> setVecPath(const DictV &v, const string &path, const DictG &valu
     return newv;
   }
   
-//  BOOST_LOG_TRIVIAL(trace) << "before " << Dict::toString(newv);
+//  BOOST_LOG_TRIVIAL(trace) << "before " << toString(newv);
   newv[index] = value;
-//  BOOST_LOG_TRIVIAL(trace) << "after " << Dict::toString(newv);
+//  BOOST_LOG_TRIVIAL(trace) << "after " << toString(newv);
   
   return newv;
 
 }
 
-optional<DictG> setGPath(const DictG &g, const string &path, const DictG &value) {
+optional<DictG> Dict::setGPath(const DictG &g, const string &path, const DictG &value) {
 
-  BOOST_LOG_TRIVIAL(trace) << "setGPath " << path << ", " << Dict::toString(value);
+//  BOOST_LOG_TRIVIAL(trace) << "setGPath " << path << ", " << toString(value);
 
-  auto obj = Dict::getObject(g);
+  auto obj = getObject(g);
   if (!obj) {
-    auto vec = Dict::getVector(g);
+    auto vec = getVector(g);
     if (!vec) {
       BOOST_LOG_TRIVIAL(error) << "only objects and vectors supported";
       return nullopt;
