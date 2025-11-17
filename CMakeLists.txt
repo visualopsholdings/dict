@@ -26,6 +26,8 @@ include_directories(include)
 
 add_library(DictLib STATIC     
     src/dict.cpp
+    src/ptr.cpp
+    src/result.cpp
   )
   target_link_libraries(DictLib reflectcpp yaml-cpp::yaml-cpp ${Boost_LOG_LIBRARY} )
 
@@ -43,3 +45,8 @@ add_executable(PtrTest test/ptrtest.cpp)
   target_link_libraries(PtrTest DictLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
 add_test(PtrTest PtrTest)
+
+add_executable(MonadTest test/monadtest.cpp)
+  target_link_libraries(MonadTest DictLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+
+add_test(MonadTest MonadTest)

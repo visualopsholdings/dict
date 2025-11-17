@@ -90,8 +90,7 @@ BOOST_AUTO_TEST_CASE( findObjSimple )
   cout << "=== findObjSimple ===" << endl;
   
   auto result = Dict::find_pointer(objSimple, objSimplePath);
-  BOOST_CHECK(result);
-  BOOST_CHECK_EQUAL(*Dict::getString(*result), "yyy");
+  BOOST_CHECK_EQUAL(Dict(result).string(), "yyy");
 
 }
   
@@ -100,10 +99,7 @@ BOOST_AUTO_TEST_CASE( findObjPaths )
   cout << "=== findObjPaths ===" << endl;
   
   auto result = Dict::find_pointer(objPaths, objPathsPath);
-  BOOST_CHECK(result);
-  auto sss = Dict::getString(*result);
-  BOOST_CHECK(sss);
-  BOOST_CHECK_EQUAL(*sss, "eee");
+  BOOST_CHECK_EQUAL(Dict(result).string(), "eee");
 
 }
   
@@ -112,10 +108,7 @@ BOOST_AUTO_TEST_CASE( findVecSimple )
   cout << "=== findVecSimple ===" << endl;
   
   auto result = Dict::find_pointer(vecSimple, vecSimplePath);
-  BOOST_CHECK(result);
-  auto sss = Dict::getString(*result);
-  BOOST_CHECK(sss);
-  BOOST_CHECK_EQUAL(*sss, "bbb");
+  BOOST_CHECK_EQUAL(Dict(result).string(), "bbb");
 
 }
   
@@ -124,10 +117,7 @@ BOOST_AUTO_TEST_CASE( findVecPaths )
   cout << "=== findVecPaths ===" << endl;
   
   auto result = Dict::find_pointer(vecPaths, vecPathsPath);
-  BOOST_CHECK(result);
-  auto sss = Dict::getString(*result);
-  BOOST_CHECK(sss);
-  BOOST_CHECK_EQUAL(*sss, "eee");
+  BOOST_CHECK_EQUAL(Dict(result).string(), "eee");
 
 }
   
@@ -149,7 +139,7 @@ BOOST_AUTO_TEST_CASE( findVecIndexError )
 
   string path = "/aaa/1/bbb/ccc/1";
   auto result = Dict::find_pointer(input, path);
-  BOOST_CHECK(!result);
+  BOOST_CHECK(Dict(result).error());
 
 }
   
@@ -158,12 +148,9 @@ BOOST_AUTO_TEST_CASE( findComplex )
   cout << "=== findComplex ===" << endl;
   
   auto result = Dict::find_pointer(complexObj, complexObjPath);
-  BOOST_CHECK(result);
-  auto v = result->to_array();
-  BOOST_CHECK(v);
-  BOOST_CHECK_EQUAL(v->size(), 2);
-  BOOST_CHECK_EQUAL(v.value()[0].to_string().value(), "667d0baedfb1ed18430d8ed3");
-  BOOST_CHECK_EQUAL(v.value()[1].to_string().value(), "667d0baedfb1ed18430d8ed4");
+  BOOST_CHECK_EQUAL(Dict(result).size(), 2);
+  BOOST_CHECK_EQUAL(Dict(result).vector(0).string(), "667d0baedfb1ed18430d8ed3");
+  BOOST_CHECK_EQUAL(Dict(result).vector(1).string(), "667d0baedfb1ed18430d8ed4");
 //  cout << Dict::toString(*result) << endl;
   
 }
@@ -173,10 +160,9 @@ BOOST_AUTO_TEST_CASE( setObjSimple )
   cout << "=== setObjSimple ===" << endl;
   
   auto result = Dict::set_at_pointer(objSimple, objSimplePath, "111");
-  BOOST_CHECK(result);
-  BOOST_CHECK_EQUAL(result->to_object()->get("aaa")->to_string().value(), "xxx");
-  BOOST_CHECK_EQUAL(result->to_object()->get("bbb")->to_string().value(), "111");
-  BOOST_CHECK_EQUAL(result->to_object()->get("ccc")->to_string().value(), "zzz");
+  BOOST_CHECK_EQUAL(Dict(result).object("aaa").string(), "xxx");
+  BOOST_CHECK_EQUAL(Dict(result).object("bbb").string(), "111");
+  BOOST_CHECK_EQUAL(Dict(result).object("ccc").string(), "zzz");
 //  cout << Dict::toString(*result) << endl;
 
 }
@@ -186,11 +172,10 @@ BOOST_AUTO_TEST_CASE( setObjPaths )
   cout << "=== setObjPaths ===" << endl;
   
   auto result = Dict::set_at_pointer(objPaths, objPathsPath, "111");
-  BOOST_CHECK(result);
 //  cout << Dict::toString(*result) << endl;
-  BOOST_CHECK_EQUAL(result->to_object()->get("aaa")->to_object()->get("bbb")->to_object()->get("ccc")->to_object()->get("ddd")->to_string().value(), "111");
-  BOOST_CHECK_EQUAL(result->to_object()->get("xxx")->to_string().value(), "yyy");
-  BOOST_CHECK_EQUAL(result->to_object()->get("zzz")->to_string().value(), "222");
+  BOOST_CHECK_EQUAL(Dict(result).object("aaa").object("bbb").object("ccc").object("ddd").string(), "111");
+  BOOST_CHECK_EQUAL(Dict(result).object("xxx").string(), "yyy");
+  BOOST_CHECK_EQUAL(Dict(result).object("zzz").string(), "222");
 
 }
   
@@ -199,12 +184,11 @@ BOOST_AUTO_TEST_CASE( setVecSimple )
   cout << "=== setVecSimple ===" << endl;
   
   auto result = Dict::set_at_pointer(vecSimple, vecSimplePath, "111");
-  BOOST_CHECK(result);
 //  cout << Dict::toString(*result) << endl;
-  BOOST_CHECK_EQUAL(result->to_array()->size(), 3);
-  BOOST_CHECK_EQUAL(result->to_array().value()[0].to_string().value(), "aaa");
-  BOOST_CHECK_EQUAL(result->to_array().value()[1].to_string().value(), "111");
-  BOOST_CHECK_EQUAL(result->to_array().value()[2].to_string().value(), "ccc");
+  BOOST_CHECK_EQUAL(Dict(result).size(), 3);
+  BOOST_CHECK_EQUAL(Dict(result).vector(0).string(), "aaa");
+  BOOST_CHECK_EQUAL(Dict(result).vector(1).string(), "111");
+  BOOST_CHECK_EQUAL(Dict(result).vector(2).string(), "ccc");
 
 }
   
@@ -213,18 +197,15 @@ BOOST_AUTO_TEST_CASE( setVecPaths )
   cout << "=== setVecPaths ===" << endl;
   
   auto result = Dict::set_at_pointer(vecPaths, vecPathsPath, "111");
-  BOOST_CHECK(result);
 //  cout << Dict::toString(*result) << endl;
-  auto aaa = result->to_object()->get("aaa")->to_array();
-  BOOST_CHECK(aaa);
-  BOOST_CHECK_EQUAL(aaa->size(), 3);
-  BOOST_CHECK_EQUAL(aaa.value()[0].to_string().value(), "xxx");
-  BOOST_CHECK_EQUAL(aaa.value()[2].to_string().value(), "zzz");
+  auto aaa = Dict(result).object("aaa").vector();
+  BOOST_CHECK_EQUAL(aaa.size(), 3);
+  BOOST_CHECK_EQUAL(Dict(aaa).vector(0).string(), "xxx");
+  BOOST_CHECK_EQUAL(Dict(aaa).vector(2).string(), "zzz");
 
-  auto ccc = aaa.value()[1].to_object()->get("bbb")->to_object()->get("ccc")->to_array();
-  BOOST_CHECK(ccc);
-  BOOST_CHECK_EQUAL(ccc->size(), 2);
-  BOOST_CHECK_EQUAL(ccc.value()[1].to_string().value(), "111");
+  auto ccc = Dict(aaa).vector(1).object("bbb").object("ccc").vector();
+  BOOST_CHECK_EQUAL(ccc.size(), 2);
+  BOOST_CHECK_EQUAL(Dict(ccc).vector(1).string(), "111");
 
 }
   
@@ -235,28 +216,8 @@ BOOST_AUTO_TEST_CASE( setComplex )
   auto value = DictV{"667d0baedfb1ed18430d8ed4"};
   
   auto result = Dict::set_at_pointer(complexObj, complexObjPath, value);
-  BOOST_CHECK(result);
 //  cout << Dict::toString(*result) << endl;
-  BOOST_CHECK_EQUAL(result->to_object()->get("accesses")->to_array().value()[2].to_object()->get("users")->to_array()->size(), 1);
-  BOOST_CHECK_EQUAL(result->to_object()->get("accesses")->to_array().value()[2].to_object()->get("users")->to_array().value()[0].to_string().value(), "667d0baedfb1ed18430d8ed4");
+  BOOST_CHECK_EQUAL(Dict(result).object("accesses").vector(2).object("users").size(), 1);
+  BOOST_CHECK_EQUAL(Dict(result).object("accesses").vector(2).object("users").vector(0).string(), "667d0baedfb1ed18430d8ed4");
   
 }
-
-BOOST_AUTO_TEST_CASE( monad )
-{
-  cout << "=== monad ===" << endl;
-
-  // these should not crash, but they do.
-//  auto result1 = complexObj.get("accesses")->to_object()->get("aaaaa")->to_object()->get("bbbbb");
-  // should return an error (non value) that says accesses/aaaaa is not a thing.
-  // and should look like this.
-//  auto result = complexObj.get("accesses").object("aaaaa").object("bbbbb");
-  
-//  auto result2 = complexObj.get("accesses").value().to_array().value()[3].to_object()->get("users");
-  // should return an error (non value) that says accesses/3 is not a thing.
-  // and should look like this.
-//  auto result = complexObj.get("accesses").array(3).object("users");
-
-}
-
-

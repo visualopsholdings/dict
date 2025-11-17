@@ -14,28 +14,16 @@
 #ifndef H_dict
 #define H_dict
 
-#include <rfl.hpp>
-#include <optional>
+#include "result.hpp"
 
 namespace vops {
 
-typedef rfl::Generic DictG;
-  // a "Generic" type containing any sort of thing.
-  // under the covers reflectcpp uses a variant for this.
-  
-typedef rfl::Object<rfl::Generic> DictO;
-  // an "object" in the dictionary is fundamentally a dictionary.
-  // so syntax like:
-  // DictO o;
-  // o["hello"] = "world";
-
-typedef std::vector<rfl::Generic> DictV;
-  // a vector of dictionaries.
-  
 class Dict {
 
 public:
-
+  Dict(std::optional<DictG> g): _dict(g) {}
+  Dict() {}
+  
   static std::optional<DictO> getObject(const DictG &obj);
   static std::optional<DictO> getObject(rfl::Result<DictG> result);
     // given a generic object, get an Object out of it.
@@ -104,6 +92,29 @@ public:
   static std::optional<DictG> set_at_pointer(const DictG &g, const std::string &path, const DictG &value);
     // boost::json style find pointer, except set_at_pointer returns a new value.
 
+  // monad entry points.
+  Result object(const std::string &key) {
+    return Result(_dict).object(key);
+  }
+  DictO object() {
+    return Result(_dict).object();
+  }
+  Result vector(int index) {
+    return Result(_dict).vector(index);
+  }
+  DictV vector() {
+    return Result(_dict).vector();
+  }
+  std::string string() {
+    return Result(_dict).string();
+  }
+  int size() {
+    return Result(_dict).size();
+  }
+  bool error() {
+    return Result(_dict).has_error();
+  }
+
 private:    
 
   static std::optional<DictG> getGPath(const DictG &g, const std::string &path);
@@ -113,6 +124,8 @@ private:
   static std::optional<DictO> setObjPath(const DictO &obj, const std::string &path, const DictG &value);
   static std::optional<DictV> setVecPath(const DictV &v, const std::string &path, const DictG &value);
 
+  std::optional<DictG> _dict;
+  
 };
 
 // a really helpful function for initialising DictO's because they don't accept

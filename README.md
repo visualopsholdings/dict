@@ -1,4 +1,4 @@
-# dict
+# Dict
 
 C++ can express generic "dictionary" objects using cppreflect.
 
@@ -8,8 +8,17 @@ This project defines a utility class called "Dict" which contains useful
 functions for dealing with dictionaries in C++ along with some typedefs
 for reflect-cpp to make the types shorter and clearer.
 
-A future for this code is to implement a lot of this code as a Monad, that
-is why optional is used a lot and is already chained internally.
+A simple Monad is provided which will allow simple syntax that won't throw which
+may be useful.
+
+To use the Monad, just pass in any DictG based object (even an optional) and then drill
+into your dictionary like so:
+
+```
+  Dict(test).object("hello").vector(3).string();
+```
+
+If it is good, the string will be valid other wise you will get an appropriate error.
 
 ## Prerequsists
 
@@ -131,5 +140,10 @@ Dict is licensed under [version 3 of the GNU General Public License] contained i
 ### 13-Nov-2025 to 15-Nov-2025
 
 - Implement find_pointer and set_at_pointer.
+
+### 17-Nov-2025
+
+- Implement a simple monad to make testing a lot easier and more expressive.
+
 
 
