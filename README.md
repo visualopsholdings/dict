@@ -20,7 +20,7 @@ into your dictionary like so:
 
 If it is good, the string will be valid other wise you will get an appropriate error.
 
-## Prerequsists
+## Prerequisites
 
 #### Linux
 
@@ -141,7 +141,7 @@ Dict is licensed under [version 3 of the GNU General Public License] contained i
 
 - Implement find_pointer and set_at_pointer.
 
-### 17-Nov-2025
+### 17-Nov-2025 to 18-Nov-2025
 
 - Implement a simple monad to make testing a lot easier and more expressive.
 

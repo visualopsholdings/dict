@@ -6,6 +6,10 @@
     
   Our result monad.
     
+  Our result is just an extension of the rfl::Result class except
+  we mantain a "path" so that error messages can be more descriptive about
+  where they come from. Like a stack.
+
   Licensed under [version 3 of the GNU General Public License] contained in LICENSE.
  
   https://github.com/visualopsholdings/dict
@@ -65,7 +69,6 @@ public:
   int size();
     // if the current result is a vector, return the size
     // if an error, log the error and return the largest number.
-    
 
   std::optional<std::string> error();
     // if there is an error, return that error as a string.
