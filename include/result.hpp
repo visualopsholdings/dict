@@ -33,12 +33,12 @@ typedef rfl::Object<rfl::Generic> DictO;
 typedef std::vector<rfl::Generic> DictV;
   // a vector of dictionaries.
   
-class Result {
+class Result : public rfl::Result<DictG> {
   
 public:
   Result(std::optional<DictG> g);
   Result(std::optional<DictG> g, const std::string &path);
-  Result(const Result &prev, bool error, const std::string &msg);
+  Result(const Result &prev, const rfl::Error &err);
   
   std::string string();
     // return the current result as a string. If we are in error then return that
@@ -73,12 +73,8 @@ public:
   std::optional<int> errori();
     // if there is an error, return the biggest integer.
     
-  bool has_error() { return _error; }
-    // is there an error?
-    
 private:
-  bool _error;
-  std::variant<std::string, DictG> _data;
+
   std::string _path;
   
 };

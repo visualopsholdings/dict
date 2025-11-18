@@ -15,11 +15,18 @@
 #include <iostream>
 #include <rfl/json.hpp>
 
+#include <boost/log/trivial.hpp>
+#include <boost/log/expressions.hpp>
+
 #define BOOST_AUTO_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 
 using namespace std;
 using namespace vops;
+
+void setupLog() {
+  boost::log::core::get()->set_filter(boost::log::trivial::severity >= boost::log::trivial::debug);
+}
 
 auto simpleStringObj = dictO({ { "aaaa", "bbbb" } });
 auto simpleNumObj = dictO({ { "aaaa", 42 } });
@@ -48,6 +55,8 @@ auto complexObj = dictO({
 BOOST_AUTO_TEST_CASE( simple )
 {
   cout << "=== simple ===" << endl;
+  
+  setupLog();
 
   BOOST_CHECK_EQUAL(Dict(simpleStringObj).object("aaaa").string(), "bbbb");
   
@@ -57,6 +66,8 @@ BOOST_AUTO_TEST_CASE( simpleError )
 {
   cout << "=== simpleError ===" << endl;
 
+  setupLog();
+
   BOOST_CHECK(!Dict(simpleStringObj).object("aaaa").error());
   
 }
@@ -64,6 +75,8 @@ BOOST_AUTO_TEST_CASE( simpleError )
 BOOST_AUTO_TEST_CASE( missingElemData )
 {
   cout << "=== missingElemData ===" << endl;
+
+  setupLog();
 
   BOOST_CHECK_EQUAL(Dict(simpleStringObj).object("cccc").string(), "Err: cccc not found");
   
@@ -73,6 +86,8 @@ BOOST_AUTO_TEST_CASE( badElemTypeData )
 {
   cout << "=== badElemTypeData ===" << endl;
 
+  setupLog();
+
   BOOST_CHECK_EQUAL(Dict(simpleNumObj).object("aaaa").string(), "Err: not a string");
   
 }
@@ -80,6 +95,8 @@ BOOST_AUTO_TEST_CASE( badElemTypeData )
 BOOST_AUTO_TEST_CASE( missingElemError )
 {
   cout << "=== missingElemError ===" << endl;
+
+  setupLog();
 
   auto elem = Dict(simpleStringObj).object("cccc");
   BOOST_CHECK(elem.error());
@@ -90,6 +107,8 @@ BOOST_AUTO_TEST_CASE( missingElemError )
 BOOST_AUTO_TEST_CASE( missingPaths )
 {
   cout << "=== missingPaths ===" << endl;
+
+  setupLog();
 
   // it's a vector!
   BOOST_CHECK(Dict(complexObj).object("accesses").object("aaaaa").error());

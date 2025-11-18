@@ -16,58 +16,59 @@
 
 using namespace vops;
 
-Result::Result(std::optional<DictG> g): _path("") {
+Result::Result(std::optional<DictG> g): rfl::Result<DictG>(DictG()), _path("") {
 
   if (g) {
-    _data = *g;
-    _error = false;
+    rfl::Result<DictG>::operator=(rfl::Result<DictG>(*g)); 
   }
   else {
-    _error = true;
+    rfl::Result<DictG>::operator=(rfl::Unexpected<rfl::Error>(rfl::Error("nullopt"))); 
   }
   
 }
 
-Result::Result(std::optional<DictG> g, const std::string &path): _path(path) {
+Result::Result(std::optional<DictG> g, const std::string &path): rfl::Result<DictG>(DictG()), _path(path) {
 
   if (g) {
-    _data = *g;
-    _error = false;
+    rfl::Result<DictG>::operator=(rfl::Result<DictG>(*g)); 
   }
   else {
-    _error = true;
+    rfl::Result<DictG>::operator=(rfl::Unexpected<rfl::Error>(rfl::Error("nullopt"))); 
   }
+  
 }
   
-Result::Result(const Result &prev, bool error, const std::string &msg) {
+Result::Result(const Result &prev, const rfl::Error &err): rfl::Result<DictG>(prev) {
 
   _path = prev._path;
-  _error = error;
-  _data = msg;
+//  rfl::Result<DictG>::operator=(rfl::Unexpected<rfl::Error>(rfl::Error(msg))); 
+  rfl::Result<DictG>::operator=(rfl::Unexpected<rfl::Error>(err)); 
   
 }
 
 Result Result::object(const std::string &key) {
 
-//  BOOST_LOG_TRIVIAL(trace) << "Result::object";
+  BOOST_LOG_TRIVIAL(debug) << "Result::object "<< key;
 
-  if (_error) {
-//    BOOST_LOG_TRIVIAL(trace) << "unwinding error";
+  if (!has_value()) {
+    BOOST_LOG_TRIVIAL(trace) << "unwinding error";
     return *this;
   }
   
-  auto obj = Dict::getObject(get<1>(_data));
+  auto obj = Dict::getObject(*this);
   if (!obj) {
-    return Result(*this, true, "Err: Dict is not an object");
+    return Result(*this, rfl::Error("Err: Dict is not an object"));
   }
   
+  BOOST_LOG_TRIVIAL(trace) << Dict::toString(*obj);
+
   auto elem = obj->get(key);
   if (!elem) {
-    return Result(*this, true, "Err: " + key + " not found");
+    return Result(*this, rfl::Error("Err: " + key + " not found"));
   }
   
   auto newpath = _path + "/" + key;
-//  BOOST_LOG_TRIVIAL(trace) << "success path now " << newpath;
+  BOOST_LOG_TRIVIAL(trace) << "success path now " << newpath;
 
   return Result(*elem, newpath);
   
@@ -75,12 +76,14 @@ Result Result::object(const std::string &key) {
 
 DictO Result::object() {
 
-  if (_error) {
+  BOOST_LOG_TRIVIAL(debug) << "Result::object";
+
+  if (!has_value()) {
     BOOST_LOG_TRIVIAL(error) << "error: " << *error() << " returning empty object";
     return DictO();
   }
 
-  auto o = Dict::getObject(get<1>(_data));
+  auto o = Dict::getObject(*this);
   if (!o) {
     BOOST_LOG_TRIVIAL(error) << "error: Dict is not an object returning empty object";
     return DictO();
@@ -92,27 +95,27 @@ DictO Result::object() {
 
 Result Result::vector(int index) {
 
-//  BOOST_LOG_TRIVIAL(trace) << "Result::vector";
+  BOOST_LOG_TRIVIAL(debug) << "Result::vector " << index;
 
-  if (_error) {
-//    BOOST_LOG_TRIVIAL(trace) << "unwinding error";
+  if (!has_value()) {
+    BOOST_LOG_TRIVIAL(trace) << "unwinding error";
     return *this;
   }
   
-  auto v = Dict::getVector(get<1>(_data));
+  auto v = Dict::getVector(*this);
   if (!v) {
-    return Result(*this, true, "Err: Dict is not a vector");
+    return Result(*this, rfl::Error("Err: Dict is not a vector"));
   }
   
   if (index >= v->size()) {
     std::stringstream ss;
     ss << "Err: index " << index << " is invalid";
-    return Result(*this, true, ss.str());
+    return Result(*this, rfl::Error(ss.str()));
   }
   
   std::stringstream ss;
   ss << _path << "/" << index;
-//  BOOST_LOG_TRIVIAL(trace) << "success path now " << ss.str();
+  BOOST_LOG_TRIVIAL(trace) << "success path now " << ss.str();
 
   return Result((*v)[index], ss.str());
 
@@ -120,12 +123,14 @@ Result Result::vector(int index) {
 
 DictV Result::vector() {
 
-  if (_error) {
+  BOOST_LOG_TRIVIAL(debug) << "Result::vector";
+
+  if (!has_value()) {
     BOOST_LOG_TRIVIAL(error) << "error: " << *error() << " returning empty vector";
     return DictV();
   }
 
-  auto v = Dict::getVector(get<1>(_data));
+  auto v = Dict::getVector(*this);
   if (!v) {
     BOOST_LOG_TRIVIAL(error) << "error: Dict is not a vector returning empty vector";
     return DictV();
@@ -137,14 +142,14 @@ DictV Result::vector() {
 
 int Result::size() {
 
-//  BOOST_LOG_TRIVIAL(trace) << "Result::size";
+  BOOST_LOG_TRIVIAL(debug) << "Result::size";
 
-  if (_error) {
-//    BOOST_LOG_TRIVIAL(trace) << "unwinding error";
+  if (!has_value()) {
+    BOOST_LOG_TRIVIAL(trace) << "unwinding error";
     return *errori();
   }
   
-  auto v = Dict::getVector(get<1>(_data));
+  auto v = Dict::getVector(*this);
   if (!v) {
     BOOST_LOG_TRIVIAL(trace) << "underlying error is Err: not a vector";
     return INT_MAX;
@@ -156,14 +161,14 @@ int Result::size() {
 
 std::string Result::string() {
 
-//  BOOST_LOG_TRIVIAL(trace) << "Result::string";
+  BOOST_LOG_TRIVIAL(debug) << "Result::string";
 
-  if (_error) {
-//    BOOST_LOG_TRIVIAL(trace) << "unwinding error";
+  if (!has_value()) {
+    BOOST_LOG_TRIVIAL(trace) << "unwinding error";
     return *error();
   }
   
-  auto str = Dict::getString(get<1>(_data));
+  auto str = Dict::getString(*this);
   if (!str) {
     return "Err: not a string";
   }
@@ -174,9 +179,9 @@ std::string Result::string() {
 
 std::optional<std::string> Result::error() {
 
-//  BOOST_LOG_TRIVIAL(trace) << "Result::error";
+  BOOST_LOG_TRIVIAL(debug) << "Result::error";
 
-  if (!_error) {
+  if (has_value()) {
     return std::nullopt;
   }
 
@@ -184,7 +189,7 @@ std::optional<std::string> Result::error() {
   if (!_path.empty()) {
     ss << "Path: " << _path << " ";
   }
-  ss << get<0>(_data);
+  ss << rfl::Result<DictG>::error().what();
   
   return ss.str();
   
@@ -192,9 +197,9 @@ std::optional<std::string> Result::error() {
 
 std::optional<int> Result::errori() {
 
-//  BOOST_LOG_TRIVIAL(trace) << "Result::error";
+  BOOST_LOG_TRIVIAL(debug) << "Result::error";
 
-  if (!_error) {
+  if (has_value()) {
     return std::nullopt;
   }
 

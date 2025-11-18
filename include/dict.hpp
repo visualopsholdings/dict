@@ -112,7 +112,7 @@ public:
     return Result(_dict).size();
   }
   bool error() {
-    return Result(_dict).has_error();
+    return !(Result(_dict).has_value());
   }
 
 private:    
