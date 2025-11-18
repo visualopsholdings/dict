@@ -26,8 +26,8 @@ include_directories(include)
 
 add_library(DictLib STATIC     
     src/dict.cpp
-    src/ptr.cpp
-    src/result.cpp
+    src/dictptr.cpp
+    src/dictresult.cpp
   )
   target_link_libraries(DictLib reflectcpp yaml-cpp::yaml-cpp ${Boost_LOG_LIBRARY} )
 

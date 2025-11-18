@@ -1,5 +1,5 @@
 /*
-  result.hpp
+  dictresult.hpp
   
   Author: Paul Hamilton (paul@visualops.com)
   Date: 17-Nov-2025
@@ -15,8 +15,8 @@
   https://github.com/visualopsholdings/dict
 */
 
-#ifndef H_result
-#define H_result
+#ifndef H_dictresult
+#define H_dictresult
 
 #include <optional>
 #include <string>
@@ -84,4 +84,4 @@ private:
 
 };
 
-#endif // H_result
+#endif // H_dictresult

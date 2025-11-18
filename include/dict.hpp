@@ -14,7 +14,7 @@
 #ifndef H_dict
 #define H_dict
 
-#include "result.hpp"
+#include "dictresult.hpp"
 
 namespace vops {
 

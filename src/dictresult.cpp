@@ -1,5 +1,5 @@
 /*
-  result.cpp
+  dictresult.cpp
   
   Author: Paul Hamilton (paul@visualops.com)
   Date: 17-Nov-2025
@@ -8,6 +8,8 @@
  
   https://github.com/visualopsholdings/dict
 */
+
+#include "dictresult.hpp"
 
 #include "dict.hpp"
 
