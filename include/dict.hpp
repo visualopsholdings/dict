@@ -78,7 +78,7 @@ public:
     // get a string out of the dictionary with the property name.
     // This is chainable.
 
-  static std::string toString(const DictG &g, const std::string &format=".json");
+  static std::string toString(const DictG &g, bool pretty=true, const std::string &format=".json");
     // dump the generic out as JSON or YML.
 
   template<typename T>

@@ -335,18 +335,21 @@ std::optional<bool> Dict::getBool(rfl::Result<DictG> result) {
   
 }
 
-std::string Dict::toString(const DictG &g, const std::string &format) {
+std::string Dict::toString(const DictG &g, bool pretty, const std::string &format) {
 
   if (format == ".json") {
-    return rfl::json::write(g, rfl::json::pretty);
+    if (pretty) {
+      return rfl::json::write(g, rfl::json::pretty);
+    }
+    return rfl::json::write(g);
   }
-  else if (format == ".yml") {
+  
+  if (format == ".yml") {
     return rfl::yaml::write(g);
   }
-  else {
-    BOOST_LOG_TRIVIAL(error) << "invalid format " << format;
-    return "???";
-  }
+
+  BOOST_LOG_TRIVIAL(error) << "invalid format " << format;
+  return "???";
 
 }
 
