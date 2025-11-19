@@ -366,7 +366,7 @@ std::optional<DictG> Dict::parse(T &s, const std::string &format) {
 
 }
 
-std::optional<DictG> Dict::parseString(std::string &s, const std::string &format) {
+std::optional<DictG> Dict::parseString(const std::string &s, const std::string &format) {
   return parse(s, format);
 }
 
