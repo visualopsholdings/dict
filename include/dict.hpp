@@ -33,8 +33,8 @@ public:
   static std::optional<std::string> getString(rfl::Result<DictG> result);
     // given a generic object, get a string out of it.
     
-  static std::optional<long> getNum(const DictG &obj);
-  static std::optional<long> getNum(rfl::Result<DictG> result);
+  static std::optional<long long> getNum(const DictG &obj);
+  static std::optional<long long> getNum(rfl::Result<DictG> result);
     // given a generic object, get a long out of it.
     
   static std::optional<bool> getBool(const DictG &obj);
@@ -63,8 +63,8 @@ public:
     // get a string out of the dictionary with the property name.
     // This is chainable.
     
-  static std::optional<long> getNumG(std::optional<DictG> g, const std::string &name);
-  static std::optional<long> getNum(std::optional<DictO> dict, const std::string &name);
+  static std::optional<long long> getNumG(std::optional<DictG> g, const std::string &name);
+  static std::optional<long long> getNum(std::optional<DictO> dict, const std::string &name);
     // get a long out of the dictionary with the property name.
     // This is chainable.
     

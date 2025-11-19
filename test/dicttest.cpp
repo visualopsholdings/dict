@@ -70,6 +70,34 @@ BOOST_AUTO_TEST_CASE( num )
   
 }
 
+BOOST_AUTO_TEST_CASE( numG )
+{
+  cout << "=== numG ===" << endl;
+  
+  DictG d = dictO({{ "meaning", 42 }});
+  
+  auto meaning = Dict::getNumG(d, "meaning");
+  
+  BOOST_CHECK(meaning);
+  BOOST_CHECK_EQUAL(*meaning, 42);
+  
+}
+
+BOOST_AUTO_TEST_CASE( bigNum )
+{
+  cout << "=== bigNum ===" << endl;
+  
+  long long bignum = 9223372036854775807;
+  
+  auto d = dictO({{ "big", bignum }});
+  
+  auto big = Dict::getNum(d, "big");
+  
+  BOOST_CHECK(big);
+  BOOST_CHECK_EQUAL(*big, bignum);
+  
+}
+
 BOOST_AUTO_TEST_CASE( notNum )
 {
   cout << "=== notNum ===" << endl;
