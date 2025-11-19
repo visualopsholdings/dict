@@ -208,6 +208,15 @@ std::optional<DictO> Dict::getObject(const DictG &obj) {
   
 }
 
+std::optional<DictO> Dict::getObject(std::optional<DictG> obj) {
+
+  if (!obj) {
+    return std::nullopt;
+  }
+  return getObject(*obj);
+  
+}
+
 std::optional<DictO> Dict::getObject(rfl::Result<DictG> result) {
 
   if (!result) {
