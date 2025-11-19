@@ -73,7 +73,7 @@ std::optional<long> Dict::getNumG(std::optional<DictG> g, const std::string &nam
     return std::nullopt;
   }
   
-  return getNumG(*obj, name);
+  return getNum(*obj);
   
 }
 
