@@ -77,10 +77,21 @@ cd reflect-cpp
 git submodule update --init
 ./vcpkg/bootstrap-vcpkg.sh # Linux, macOS
 ./vcpkg/bootstrap-vcpkg.bat # Windows
-cmake -S . -B build -DCMAKE_CXX_STANDARD=20 -DCMAKE_BUILD_TYPE=Release -DREFLECTCPP_YAML=ON
+cmake -S . -B build -DCMAKE_CXX_STANDARD=20 -DCMAKE_BUILD_TYPE=Release \
+  -DREFLECTCPP_YAML=ON -DREFLECTCPP_BSON=ON
 cmake --build build -j 4 # gcc, clang
 cmake --build build --config Release -j 4 # MSVC
 cd build
+sudo make install
+```
+
+You'll also need the C driver to get the BSON stuff.
+
+```
+git clone https://github.com/mongodb/mongo-c-driver.git
+cd mongo-c-driver
+cmake .
+make -j4
 sudo make install
 ```
 
