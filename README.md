@@ -77,11 +77,11 @@ cd reflect-cpp
 git submodule update --init
 ./vcpkg/bootstrap-vcpkg.sh # Linux, macOS
 ./vcpkg/bootstrap-vcpkg.bat # Windows
-cmake -S . -B build -DCMAKE_CXX_STANDARD=20 -DCMAKE_BUILD_TYPE=Release \
-  -DREFLECTCPP_YAML=ON -DREFLECTCPP_BSON=ON
-cmake --build build -j 4 # gcc, clang
-cmake --build build --config Release -j 4 # MSVC
+cmake -S . -B build -DCMAKE_CXX_STANDARD=20 -DCMAKE_BUILD_TYPE=Release -DREFLECTCPP_YAML=ON -DREFLECTCPP_BSON=ON
+cmake --build build -j4 # gcc, clang
+cmake --build build --config Release -j4 # MSVC
 cd build
+make -j4  CFLAGS="-DREFLECT_CPP_C_ARRAYS_OR_INHERITANCE"
 sudo make install
 ```
 
