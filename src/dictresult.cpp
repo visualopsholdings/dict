@@ -50,7 +50,7 @@ Result::Result(const Result &prev, const rfl::Error &err): rfl::Result<DictG>(pr
 
 Result Result::object(const std::string &key) {
 
-  BOOST_LOG_TRIVIAL(debug) << "Result::object "<< key;
+  BOOST_LOG_TRIVIAL(trace) << "Result::object "<< key;
 
   if (!has_value()) {
     BOOST_LOG_TRIVIAL(trace) << "unwinding error";
@@ -78,7 +78,7 @@ Result Result::object(const std::string &key) {
 
 DictO Result::object() {
 
-  BOOST_LOG_TRIVIAL(debug) << "Result::object";
+  BOOST_LOG_TRIVIAL(trace) << "Result::object";
 
   if (!has_value()) {
     BOOST_LOG_TRIVIAL(error) << "error: " << *error() << " returning empty object";
@@ -97,7 +97,7 @@ DictO Result::object() {
 
 Result Result::vector(int index) {
 
-  BOOST_LOG_TRIVIAL(debug) << "Result::vector " << index;
+  BOOST_LOG_TRIVIAL(trace) << "Result::vector " << index;
 
   if (!has_value()) {
     BOOST_LOG_TRIVIAL(trace) << "unwinding error";
@@ -125,7 +125,7 @@ Result Result::vector(int index) {
 
 DictV Result::vector() {
 
-  BOOST_LOG_TRIVIAL(debug) << "Result::vector";
+  BOOST_LOG_TRIVIAL(trace) << "Result::vector";
 
   if (!has_value()) {
     BOOST_LOG_TRIVIAL(error) << "error: " << *error() << " returning empty vector";
@@ -144,7 +144,7 @@ DictV Result::vector() {
 
 int Result::size() {
 
-  BOOST_LOG_TRIVIAL(debug) << "Result::size";
+  BOOST_LOG_TRIVIAL(trace) << "Result::size";
 
   if (!has_value()) {
     BOOST_LOG_TRIVIAL(trace) << "unwinding error";
@@ -163,7 +163,7 @@ int Result::size() {
 
 std::string Result::string() {
 
-  BOOST_LOG_TRIVIAL(debug) << "Result::string";
+  BOOST_LOG_TRIVIAL(trace) << "Result::string";
 
   if (!has_value()) {
     BOOST_LOG_TRIVIAL(trace) << "unwinding error";
@@ -181,7 +181,7 @@ std::string Result::string() {
 
 std::optional<std::string> Result::error() {
 
-  BOOST_LOG_TRIVIAL(debug) << "Result::error";
+  BOOST_LOG_TRIVIAL(trace) << "Result::error";
 
   if (has_value()) {
     return std::nullopt;
@@ -199,7 +199,7 @@ std::optional<std::string> Result::error() {
 
 std::optional<int> Result::errori() {
 
-  BOOST_LOG_TRIVIAL(debug) << "Result::error";
+  BOOST_LOG_TRIVIAL(trace) << "Result::error";
 
   if (has_value()) {
     return std::nullopt;
