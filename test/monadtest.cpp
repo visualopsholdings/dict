@@ -30,6 +30,7 @@ void setupLog() {
 
 auto simpleStringObj = dictO({ { "aaaa", "bbbb" } });
 auto simpleNumObj = dictO({ { "aaaa", 42 } });
+auto simpleBoolObj = dictO({ { "aaaa", true } });
 
 DictV emptyV;
 auto complexObj = dictO({
@@ -124,4 +125,25 @@ BOOST_AUTO_TEST_CASE( missingPaths )
   BOOST_CHECK_EQUAL(Dict(complexObj).object("accesses").vector(2).object("users").size(), 2);
   
 }
+
+BOOST_AUTO_TEST_CASE( boolean )
+{
+  cout << "=== boolean ===" << endl;
+  
+  setupLog();
+
+  BOOST_CHECK(Dict(simpleBoolObj).object("aaaa").boolean());
+  
+}
+
+BOOST_AUTO_TEST_CASE( num )
+{
+  cout << "=== num ===" << endl;
+  
+  setupLog();
+
+  BOOST_CHECK_EQUAL(Dict(simpleNumObj).object("aaaa").num(), 42);
+  
+}
+
 

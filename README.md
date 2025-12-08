@@ -155,5 +155,11 @@ Dict is licensed under [version 3 of the GNU General Public License] contained i
 
 - Implement a simple monad to make testing a lot easier and more expressive.
 
+### 8-Dec-2025
+
+- Boolean and Num support in monad.
+
+
+
 
 

@@ -179,6 +179,44 @@ std::string Result::string() {
   
 }
 
+bool Result::boolean() {
+
+  BOOST_LOG_TRIVIAL(trace) << "Result::boolean";
+
+  if (!has_value()) {
+    BOOST_LOG_TRIVIAL(trace) << "unwinding error";
+    BOOST_LOG_TRIVIAL(error) << *error();
+    return false;
+  }
+  
+  auto b = Dict::getBool(*this);
+  if (!b) {
+    return false;
+  }
+
+  return *b;
+  
+}
+
+long long Result::num() {
+
+  BOOST_LOG_TRIVIAL(trace) << "Result::num";
+
+  if (!has_value()) {
+    BOOST_LOG_TRIVIAL(trace) << "unwinding error";
+    BOOST_LOG_TRIVIAL(error) << *error();
+    return false;
+  }
+  
+  auto l = Dict::getNum(*this);
+  if (!l) {
+    return 0;
+  }
+
+  return *l;
+  
+}
+
 std::optional<std::string> Result::error() {
 
   BOOST_LOG_TRIVIAL(trace) << "Result::error";

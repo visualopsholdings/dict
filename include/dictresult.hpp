@@ -48,6 +48,12 @@ public:
     // return the current result as a string. If we are in error then return that
     // error as a string.
     
+  bool boolean();
+    // return the current result as a boolean
+    
+  long long num();
+    // return the current result as a number
+    
   Result object(const std::string &key);
     // if the current result is an object, return a sub object with 
     // the key.
