@@ -184,8 +184,6 @@ bool Result::boolean() {
   BOOST_LOG_TRIVIAL(trace) << "Result::boolean";
 
   if (!has_value()) {
-    BOOST_LOG_TRIVIAL(trace) << "unwinding error";
-    BOOST_LOG_TRIVIAL(error) << *error();
     return false;
   }
   
@@ -203,9 +201,7 @@ long long Result::num() {
   BOOST_LOG_TRIVIAL(trace) << "Result::num";
 
   if (!has_value()) {
-    BOOST_LOG_TRIVIAL(trace) << "unwinding error";
-    BOOST_LOG_TRIVIAL(error) << *error();
-    return false;
+    return 0;
   }
   
   auto l = Dict::getNum(*this);
