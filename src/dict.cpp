@@ -413,3 +413,18 @@ std::optional<DictG> Dict::parseFile(const std::string &fn) {
   return std::nullopt;
   
 }
+
+DictO Dict::removeKey(const DictO &m, const std::string &key) {
+
+  DictO m2;
+  
+  // TBD: how do we do this with copy_if etc.
+  for (auto i: m) {
+    if (get<0>(i) != key) {
+      m2[get<0>(i)] = get<1>(i);
+    }
+  }
+  
+  return m2;
+}
+

@@ -93,6 +93,9 @@ public:
   static std::optional<DictG> set_at_pointer(const DictG &g, const std::string &path, const DictG &value);
     // boost::json style find pointer, except set_at_pointer returns a new value.
 
+  static DictO removeKey(const DictO &m, const std::string &key);
+    // why is this so hard to do!!!! added a method to do it.
+    
   // monad entry points.
   Result object(const std::string &key) {
     return Result(_dict).object(key);
