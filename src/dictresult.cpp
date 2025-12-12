@@ -215,8 +215,6 @@ long long Result::num() {
 
 std::optional<std::string> Result::error() {
 
-  BOOST_LOG_TRIVIAL(trace) << "Result::error";
-
   if (has_value()) {
     return std::nullopt;
   }
@@ -227,6 +225,8 @@ std::optional<std::string> Result::error() {
   }
   ss << rfl::Result<DictG>::error().what();
   
+  BOOST_LOG_TRIVIAL(trace) << "Result::error " << ss.str();
+
   return ss.str();
   
 }
