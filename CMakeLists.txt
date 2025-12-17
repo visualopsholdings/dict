@@ -35,7 +35,7 @@ add_library(DictLib STATIC
     src/dictptr.cpp
     src/dictresult.cpp
   )
-  target_link_libraries(DictLib reflectcpp $(YAML_LIB) ${Boost_LOG_LIBRARY} )
+  target_link_libraries(DictLib reflectcpp ${YAML_LIB} ${Boost_LOG_LIBRARY} )
 
 add_executable(DictTest test/dicttest.cpp)
   target_link_libraries(DictTest DictLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
