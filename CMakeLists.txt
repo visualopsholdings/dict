@@ -18,7 +18,7 @@ project (dict)
   add_definitions(-DBOOST_ALL_DYN_LINK) 
   enable_testing()
 
-set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
