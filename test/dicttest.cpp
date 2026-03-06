@@ -205,6 +205,43 @@ BOOST_AUTO_TEST_CASE( extraFields )
 
 }
 
+BOOST_AUTO_TEST_CASE( removeKey )
+{
+  cout << "=== removeKey ===" << endl;
+
+  auto result = Dict::removeKey(dictO({
+    { "a", 1 },
+    { "b", 2 },
+    { "c", 3 },
+    { "d", 4 },
+  }), "b");
+  BOOST_CHECK(Dict::getNum(result, "a"));
+  BOOST_CHECK(!Dict::getNum(result, "b"));
+  BOOST_CHECK(Dict::getNum(result, "c"));
+  BOOST_CHECK(Dict::getNum(result, "d"));
+  
+}
+
+BOOST_AUTO_TEST_CASE( filterKeys )
+{
+  cout << "=== filterKeys ===" << endl;
+
+  auto result = Dict::filterKeys(dictO({
+    { "a", 1 },
+    { "b", 2 },
+    { "c", 3 },
+    { "d", 4 },
+  }), {"b", "c"});
+  BOOST_CHECK(Dict::getNum(result, "a"));
+  BOOST_CHECK(!Dict::getNum(result, "b"));
+  BOOST_CHECK(!Dict::getNum(result, "c"));
+  BOOST_CHECK(Dict::getNum(result, "d"));
+  
+
+}
+
+
+
 
 
 

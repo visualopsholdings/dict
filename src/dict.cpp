@@ -420,11 +420,29 @@ DictO Dict::removeKey(const DictO &m, const std::string &key) {
   
   // TBD: how do we do this with copy_if etc.
   for (auto i: m) {
-    if (get<0>(i) != key) {
-      m2[get<0>(i)] = get<1>(i);
+    auto k = get<0>(i);
+    if (k != key) {
+      m2[k] = get<1>(i);
     }
   }
   
   return m2;
 }
+
+DictO Dict::filterKeys(const DictO &m, const std::vector<std::string> &keys) {
+
+  DictO m2;
+
+  // TBD: how do we do this with copy_if etc.
+  for (auto i: m) {
+    auto k = get<0>(i);
+    if (find(keys.begin(), keys.end(), k) == keys.end()) {
+      m2[k] = get<1>(i);
+    }
+  }
+  
+  return m2;
+  
+}
+
 

@@ -94,7 +94,8 @@ public:
     // boost::json style find pointer, except set_at_pointer returns a new value.
 
   static DictO removeKey(const DictO &m, const std::string &key);
-    // why is this so hard to do!!!! added a method to do it.
+  static DictO filterKeys(const DictO &m, const std::vector<std::string> &keys);
+    // why is these so hard to do!!!! added methods to do it.
     
   // monad entry points.
   Result object(const std::string &key) {
