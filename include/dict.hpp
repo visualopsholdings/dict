@@ -25,7 +25,6 @@ public:
   Dict() {}
   
   static std::optional<DictO> getObject(const DictG &obj);
-  static std::optional<DictO> getObject(std::optional<DictG> obj);
   static std::optional<DictO> getObject(rfl::Result<DictG> result);
     // given a generic object, get an Object out of it.
     
