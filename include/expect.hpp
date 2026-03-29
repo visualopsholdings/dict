@@ -24,15 +24,15 @@ namespace vops {
 class Expect {
   
 public:
-  Expect(DictO &obj): _ref(obj) {};
+  Expect(const DictO &obj): _obj(obj) {};
     
   // I need to lesrn meta programming to build all this :-)
-  std::tuple<bool, std::string> values(const std::string a1);
-  std::tuple<bool, std::string, std::string> values(const std::string a1, const std::string a2);
-  std::tuple<bool, std::string, std::string, std::string> values(const std::string a1, const std::string a2, const std::string a3);
+  std::tuple<bool, std::string> values(const std::string a1) const;
+  std::tuple<bool, std::string, std::string> values(const std::string a1, const std::string a2) const;
+  std::tuple<bool, std::string, std::string, std::string> values(const std::string a1, const std::string a2, const std::string a3) const;
  
 private:
-  DictO& _ref;
+  const DictO& _obj;
    
 };
 
