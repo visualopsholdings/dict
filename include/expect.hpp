@@ -30,6 +30,8 @@ public:
   std::tuple<bool, std::string> values(const std::string a1) const;
   std::tuple<bool, std::string, std::string> values(const std::string a1, const std::string a2) const;
   std::tuple<bool, std::string, std::string, std::string> values(const std::string a1, const std::string a2, const std::string a3) const;
+  std::tuple<bool, std::string, std::string, std::string, std::string> values(const std::string a1, const std::string a2, const std::string a3, const std::string a4) const;
+  std::tuple<bool, std::string, std::string, std::string, std::string, std::string> values(const std::string a1, const std::string a2, const std::string a3, const std::string a4, const std::string a5) const;
  
 private:
   const DictO& _obj;
