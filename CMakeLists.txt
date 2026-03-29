@@ -34,6 +34,7 @@ add_library(DictLib STATIC
     src/dict.cpp
     src/dictptr.cpp
     src/dictresult.cpp
+    src/expect.cpp
   )
   target_link_libraries(DictLib reflectcpp ${YAML_LIB} ${Boost_LOG_LIBRARY} )
 
@@ -56,3 +57,8 @@ add_executable(MonadTest test/monadtest.cpp)
   target_link_libraries(MonadTest DictLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
 add_test(MonadTest MonadTest)
+
+add_executable(ExpectTest test/expecttest.cpp)
+  target_link_libraries(ExpectTest DictLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+
+add_test(ExpectTest ExpectTest)

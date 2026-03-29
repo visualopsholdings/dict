@@ -163,9 +163,13 @@ Dict is licensed under [version 3 of the GNU General Public License] contained i
 
 - removeKey()
 
-### 6-Mar-2025
+### 6-Mar-2026
 
 - filterKeys()
+
+### 29-Mar-2026
+
+- Implement simple "expect()"
 
 
 
