@@ -97,7 +97,7 @@ DictO Result::object() {
 
 Result Result::vector(int index) {
 
-  BOOST_LOG_TRIVIAL(trace) << "Result::vector " << index;
+//  BOOST_LOG_TRIVIAL(trace) << "Result::vector " << index;
 
   if (!has_value()) {
     BOOST_LOG_TRIVIAL(trace) << "unwinding error";
@@ -117,7 +117,7 @@ Result Result::vector(int index) {
   
   std::stringstream ss;
   ss << _path << "/" << index;
-  BOOST_LOG_TRIVIAL(trace) << "success path now " << ss.str();
+//  BOOST_LOG_TRIVIAL(trace) << "success path now " << ss.str();
 
   return Result((*v)[index], ss.str());
 
@@ -125,7 +125,7 @@ Result Result::vector(int index) {
 
 DictV Result::vector() {
 
-  BOOST_LOG_TRIVIAL(trace) << "Result::vector";
+//  BOOST_LOG_TRIVIAL(trace) << "Result::vector";
 
   if (!has_value()) {
     BOOST_LOG_TRIVIAL(error) << "error: " << *error() << " returning empty vector";
@@ -144,7 +144,7 @@ DictV Result::vector() {
 
 int Result::size() {
 
-  BOOST_LOG_TRIVIAL(trace) << "Result::size";
+//  BOOST_LOG_TRIVIAL(trace) << "Result::size";
 
   if (!has_value()) {
     BOOST_LOG_TRIVIAL(trace) << "unwinding error";
@@ -163,7 +163,7 @@ int Result::size() {
 
 std::string Result::string() {
 
-  BOOST_LOG_TRIVIAL(trace) << "Result::string";
+//  BOOST_LOG_TRIVIAL(trace) << "Result::string";
 
   if (!has_value()) {
     BOOST_LOG_TRIVIAL(trace) << "unwinding error";
@@ -181,7 +181,7 @@ std::string Result::string() {
 
 bool Result::boolean() {
 
-  BOOST_LOG_TRIVIAL(trace) << "Result::boolean";
+//  BOOST_LOG_TRIVIAL(trace) << "Result::boolean";
 
   if (!has_value()) {
     return false;
@@ -198,7 +198,7 @@ bool Result::boolean() {
 
 long long Result::num() {
 
-  BOOST_LOG_TRIVIAL(trace) << "Result::num";
+//  BOOST_LOG_TRIVIAL(trace) << "Result::num";
 
   if (!has_value()) {
     return 0;
@@ -233,7 +233,7 @@ std::optional<std::string> Result::error() {
 
 std::optional<int> Result::errori() {
 
-  BOOST_LOG_TRIVIAL(trace) << "Result::error";
+//  BOOST_LOG_TRIVIAL(trace) << "Result::error";
 
   if (has_value()) {
     return std::nullopt;
