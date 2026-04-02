@@ -50,7 +50,7 @@ Result::Result(const Result &prev, const rfl::Error &err): rfl::Result<DictG>(pr
 
 Result Result::object(const std::string &key) {
 
-  BOOST_LOG_TRIVIAL(trace) << "Result::object "<< key;
+//  BOOST_LOG_TRIVIAL(trace) << "Result::object "<< key;
 
   if (!has_value()) {
     BOOST_LOG_TRIVIAL(trace) << "unwinding error";
@@ -62,7 +62,7 @@ Result Result::object(const std::string &key) {
     return Result(*this, rfl::Error("Err: Dict is not an object"));
   }
   
-  BOOST_LOG_TRIVIAL(trace) << Dict::toString(*obj);
+//  BOOST_LOG_TRIVIAL(trace) << Dict::toString(*obj);
 
   auto elem = obj->get(key);
   if (!elem) {
@@ -70,7 +70,7 @@ Result Result::object(const std::string &key) {
   }
   
   auto newpath = _path + "/" + key;
-  BOOST_LOG_TRIVIAL(trace) << "success path now " << newpath;
+//  BOOST_LOG_TRIVIAL(trace) << "success path now " << newpath;
 
   return Result(*elem, newpath);
   
@@ -78,7 +78,7 @@ Result Result::object(const std::string &key) {
 
 DictO Result::object() {
 
-  BOOST_LOG_TRIVIAL(trace) << "Result::object";
+//  BOOST_LOG_TRIVIAL(trace) << "Result::object";
 
   if (!has_value()) {
     BOOST_LOG_TRIVIAL(error) << "error: " << *error() << " returning empty object";
