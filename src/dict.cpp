@@ -445,4 +445,11 @@ DictO Dict::filterKeys(const DictO &m, const std::vector<std::string> &keys) {
   
 }
 
+std::optional<std::string> Dict::getFirstKey(const DictO &d) {
+  for (auto i: d) {
+    return i.first;
+  }
+  return std::nullopt;
+}
+
 

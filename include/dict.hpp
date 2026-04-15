@@ -97,6 +97,9 @@ public:
   static DictO filterKeys(const DictO &m, const std::vector<std::string> &keys);
     // why is these so hard to do!!!! added methods to do it.
     
+  static std::optional<std::string> getFirstKey(const DictO &d);
+    // get the ery first key of a dictionary.
+    
   // monad entry points.
   Result object(const std::string &key) {
     return Result(_dict).object(key);

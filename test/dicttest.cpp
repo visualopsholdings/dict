@@ -240,10 +240,17 @@ BOOST_AUTO_TEST_CASE( filterKeys )
 
 }
 
+BOOST_AUTO_TEST_CASE( getFirstKey )
+{
+  cout << "=== getFirstKey ===" << endl;
 
+  auto result = Dict::getFirstKey(dictO({
+    { "a", 1 },
+  }));
+  BOOST_CHECK(result);
+  BOOST_CHECK_EQUAL(*result, "a");
 
-
-
+}
 
 
 

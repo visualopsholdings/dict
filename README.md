@@ -171,6 +171,10 @@ Dict is licensed under [version 3 of the GNU General Public License] contained i
 
 - Implement simple "expect()"
 
+### 15-Apr-2026
+
+- Implement "getFirstKey".
+
 
 
 
