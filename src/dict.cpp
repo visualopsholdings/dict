@@ -409,7 +409,7 @@ std::optional<DictG> Dict::parseFile(const std::string &fn) {
     return std::nullopt;
   }
   
-  BOOST_LOG_TRIVIAL(error) << "could not parse stream to " << p.extension();
+  BOOST_LOG_TRIVIAL(error) << "could not parse " << fn;
   return std::nullopt;
   
 }
