@@ -25,11 +25,13 @@ If it is good, the string will be valid other wise you will get an appropriate e
 The format allows for including external JSON files in a JSON file with this format:
 
 ```
-{
-  "obj": {
-    "...": "<filename.json>"
+[
+  {
+    "obj": {
+      "...": "<filename.json>"
+    }
   }
-}
+]
 ```
 
 In this case, the contents of "obj" will be an object that is the contents of "filename.json".

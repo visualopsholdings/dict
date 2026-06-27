@@ -421,7 +421,11 @@ DictG resolveJSONIncludes(const fs::path &path, const DictG &g) {
   else {
     auto v = vops::Dict::getVector(g);
     if (v) {
-      BOOST_LOG_TRIVIAL(warning) << "only resolving imports in objects for now";
+      DictV v2;
+      transform(v->begin(), v->end(), back_inserter(v2), [path](auto e) {
+        return resolveJSONIncludes(path, e);
+      });
+      return v2;
     }
   }
   return g;

@@ -27,15 +27,20 @@ BOOST_AUTO_TEST_CASE( simple )
   auto d = Dict::parseFile("../test/include.json");
   BOOST_CHECK(d);
   cout << Dict::toString(*d) << endl;
-  auto obj = Dict::getObjectG(d, "obj");
+  auto v = Dict::getVector(*d);
+  BOOST_CHECK(v);
+  BOOST_CHECK_EQUAL(v->size(), 1);
+  auto obj = Dict::getObjectG((*v)[0], "obj");
   BOOST_CHECK(obj);
   auto name = Dict::getString(*obj, "name");
   BOOST_CHECK(name);
   BOOST_CHECK_EQUAL(*name, "included obj");
-  auto s = Dict::getStringG(d, "teststring");
+  
+  auto s = Dict::getStringG((*v)[0], "teststring");
   BOOST_CHECK(s);
   BOOST_CHECK_EQUAL(*s, "string");
-  auto n = Dict::getNumG(d, "testnum");
+  
+  auto n = Dict::getNumG((*v)[0], "testnum");
   BOOST_CHECK(n);
   BOOST_CHECK_EQUAL(*n, 1);
  
