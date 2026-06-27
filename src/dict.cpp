@@ -395,7 +395,7 @@ DictG resolveJSONIncludes(const fs::path &path, const DictG &g) {
     DictO newobj;
     for (auto i: *obj) {
       auto k = get<0>(i);
-      BOOST_LOG_TRIVIAL(trace) << "processing " << k;
+//      BOOST_LOG_TRIVIAL(trace) << "processing " << k;
       if (k == "...") {
         auto s = vops::Dict::getString(get<1>(i));
         if (!s) {
