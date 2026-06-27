@@ -24,7 +24,13 @@ BOOST_AUTO_TEST_CASE( simple )
 {
   cout << "=== simple ===" << endl;
  
-  auto d = Dict::parseFile("../test/include.json");
+  std::filesystem::path path = "../dict-src/test";
+  if (!std::filesystem::exists(path)) {
+    path = "../test";
+  }
+
+
+  auto d = Dict::parseFile(path / "include.json");
   BOOST_CHECK(d);
   cout << Dict::toString(*d) << endl;
   auto v = Dict::getVector(*d);
