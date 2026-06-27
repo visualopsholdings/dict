@@ -388,7 +388,7 @@ std::optional<DictG> Dict::parseStream(std::istream &s, const std::string &forma
   return parse(s, format);
 }
 
-DictG resolveJSONIncludes(const fs::path &path, const DictG &g) {
+DictG resolveJSONIncludes(const fs::path &path, const DictG &g, bool silent) {
 
   auto obj = vops::Dict::getObject(g);
   if (obj) {
@@ -407,13 +407,19 @@ DictG resolveJSONIncludes(const fs::path &path, const DictG &g) {
           continue;
         }
         auto p = path / (s->substr(1, s->size()-2));
-        auto o = vops::Dict::parseFile(p);
+        if (!fs::exists(p)) {
+          if (!silent) {
+            BOOST_LOG_TRIVIAL(error) << "extrenal include missing " << p.string();
+          }
+          continue;
+        }
+        auto o = vops::Dict::parseFile(p, silent);
         if (o) {
           return *o;
         }
       }
       else {
-        newobj[k] = resolveJSONIncludes(path, get<1>(i));
+        newobj[k] = resolveJSONIncludes(path, get<1>(i), silent);
       }
     }
     return newobj;
@@ -422,8 +428,8 @@ DictG resolveJSONIncludes(const fs::path &path, const DictG &g) {
     auto v = vops::Dict::getVector(g);
     if (v) {
       DictV v2;
-      transform(v->begin(), v->end(), back_inserter(v2), [path](auto e) {
-        return resolveJSONIncludes(path, e);
+      transform(v->begin(), v->end(), back_inserter(v2), [path, silent](auto e) {
+        return resolveJSONIncludes(path, e, silent);
       });
       return v2;
     }
@@ -431,14 +437,14 @@ DictG resolveJSONIncludes(const fs::path &path, const DictG &g) {
   return g;
 }
 
-std::optional<DictG> Dict::parseFile(const std::string &fn) {
+std::optional<DictG> Dict::parseFile(const std::string &fn, bool silentinclude) {
 
   fs::path p = fn;
 
   if (p.extension() == ".json") {
     auto g = rfl::json::load<DictG>(fn);
     if (g) {
-      return resolveJSONIncludes(p.parent_path(), *g);
+      return resolveJSONIncludes(p.parent_path(), *g, silentinclude);
     }
   }
   else if (p.extension() == ".yml") {

@@ -86,7 +86,7 @@ public:
   
   static std::optional<DictG> parseString(const std::string &s, const std::string &format=".json");
   static std::optional<DictG> parseStream(std::istream &s, const std::string &format=".json");
-  static std::optional<DictG> parseFile(const std::string &fn);
+  static std::optional<DictG> parseFile(const std::string &fn, bool silentinclude=false);
     // given a stream, and a format the stream is in (.json, .yml) parse it.
     
   static std::optional<DictG> find_pointer(const DictG &g, const std::string &path);
