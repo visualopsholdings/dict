@@ -1,0 +1,7 @@
+{
+  "obj": {
+    "...": "<included.json>"
+  },
+  "teststring": "string",
+  "testnum": 1
+}

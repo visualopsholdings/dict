@@ -20,6 +20,20 @@ into your dictionary like so:
 
 If it is good, the string will be valid other wise you will get an appropriate error.
 
+## including external files
+
+The format allows for including external JSON files in a JSON file with this format:
+
+```
+{
+  "obj": {
+    "...": "<filename.json>"
+  }
+}
+```
+
+In this case, the contents of "obj" will be an object that is the contents of "filename.json".
+
 ## Prerequisites
 
 #### Linux
@@ -174,6 +188,10 @@ Dict is licensed under [version 3 of the GNU General Public License] contained i
 ### 15-Apr-2026
 
 - Implement "getFirstKey".
+
+### 27-Jun-2026
+
+- Implement includes.
 
 
 

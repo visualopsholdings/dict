@@ -62,3 +62,8 @@ add_executable(ExpectTest test/expecttest.cpp)
   target_link_libraries(ExpectTest DictLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
 add_test(ExpectTest ExpectTest)
+
+add_executable(IncludeTest test/includetest.cpp)
+  target_link_libraries(IncludeTest DictLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+
+add_test(IncludeTest IncludeTest)

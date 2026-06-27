@@ -388,6 +388,45 @@ std::optional<DictG> Dict::parseStream(std::istream &s, const std::string &forma
   return parse(s, format);
 }
 
+DictG resolveJSONIncludes(const fs::path &path, const DictG &g) {
+
+  auto obj = vops::Dict::getObject(g);
+  if (obj) {
+    DictO newobj;
+    for (auto i: *obj) {
+      auto k = get<0>(i);
+      BOOST_LOG_TRIVIAL(debug) << "processing " << k;
+      if (k == "...") {
+        auto s = vops::Dict::getString(get<1>(i));
+        if (!s) {
+          BOOST_LOG_TRIVIAL(error) << "include must be string path";
+          continue;
+        }
+        if ((*s)[0] != '<' || (*s)[s->size()-1] != '>') {
+          BOOST_LOG_TRIVIAL(error) << "invalid include filename format. Must have <> around it.";
+          continue;
+        }
+        auto p = path / (s->substr(1, s->size()-2));
+        auto o = vops::Dict::parseFile(p);
+        if (o) {
+          return *o;
+        }
+      }
+      else {
+        newobj[k] = resolveJSONIncludes(path, get<1>(i));
+      }
+    }
+    return newobj;
+  }
+  else {
+    auto v = vops::Dict::getVector(g);
+    if (v) {
+      BOOST_LOG_TRIVIAL(warning) << "only resolving imports in objects for now";
+    }
+  }
+  return g;
+}
+
 std::optional<DictG> Dict::parseFile(const std::string &fn) {
 
   fs::path p = fn;
@@ -395,7 +434,7 @@ std::optional<DictG> Dict::parseFile(const std::string &fn) {
   if (p.extension() == ".json") {
     auto g = rfl::json::load<DictG>(fn);
     if (g) {
-      return *g;
+      return resolveJSONIncludes(p.parent_path(), *g);
     }
   }
   else if (p.extension() == ".yml") {
