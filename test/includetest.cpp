@@ -42,12 +42,21 @@ BOOST_AUTO_TEST_CASE( simple )
   BOOST_CHECK(name);
   BOOST_CHECK_EQUAL(*name, "included obj");
   
-  auto s = Dict::getStringG((*v)[0], "teststring");
-  BOOST_CHECK(s);
-  BOOST_CHECK_EQUAL(*s, "string");
+  // make sure objects are retained.
+  auto aaa = Dict::getString(*obj, "aaa");
+  BOOST_CHECK(aaa);
+  BOOST_CHECK_EQUAL(*aaa, "string");
   
-  auto n = Dict::getNumG((*v)[0], "testnum");
-  BOOST_CHECK(n);
-  BOOST_CHECK_EQUAL(*n, 1);
+  auto bbb = Dict::getNum(*obj, "bbb");
+  BOOST_CHECK(bbb);
+  BOOST_CHECK_EQUAL(*bbb, 1);
+  
+  auto ccc = Dict::getStringG((*v)[0], "ccc");
+  BOOST_CHECK(ccc);
+  BOOST_CHECK_EQUAL(*ccc, "string");
+  
+  auto ddd = Dict::getNumG((*v)[0], "ddd");
+  BOOST_CHECK(ddd);
+  BOOST_CHECK_EQUAL(*ddd, 2);
  
 }

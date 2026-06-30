@@ -28,13 +28,15 @@ The format allows for including external JSON files in a JSON file with this for
 [
   {
     "obj": {
-      "...": "<filename.json>"
+      "...": "<filename.json>",
+      "xxx": "something"
     }
   }
 ]
 ```
 
 In this case, the contents of "obj" will be an object that is the contents of "filename.json".
+You can set extra properties, but they must be defined AFTER the "...".
 
 ## Prerequisites
 

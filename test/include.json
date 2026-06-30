@@ -1,9 +1,11 @@
 [
   {
     "obj": {
-      "...": "<included.json>"
+      "...": "<included.json>",
+      "aaa": "string",
+      "bbb": 1
     },
-    "teststring": "string",
-    "testnum": 1
+    "ccc": "string",
+    "ddd": 2
   }
 ]

@@ -413,9 +413,14 @@ DictG resolveJSONIncludes(const fs::path &path, const DictG &g, bool silent) {
           }
           continue;
         }
-        auto o = vops::Dict::parseFile(p, silent);
-        if (o) {
-          return *o;
+        auto d = vops::Dict::parseFile(p, silent);
+        if (d) {
+          auto o = Dict::getObject(*d);
+          if (!o) {
+            BOOST_LOG_TRIVIAL(error) << "only support including objects";
+            continue;
+          }
+          newobj = *o;
         }
       }
       else {
