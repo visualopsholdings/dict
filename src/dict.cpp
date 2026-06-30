@@ -409,7 +409,7 @@ DictG resolveJSONIncludes(const fs::path &path, const DictG &g, bool silent) {
         auto p = path / (s->substr(1, s->size()-2));
         if (!fs::exists(p)) {
           if (!silent) {
-            BOOST_LOG_TRIVIAL(error) << "extrenal include missing " << p.string();
+            BOOST_LOG_TRIVIAL(error) << "external include missing " << p.string();
           }
           continue;
         }
