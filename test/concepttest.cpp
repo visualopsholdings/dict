@@ -13,6 +13,7 @@
 
 #include <iostream>
 #include <rfl/json.hpp>
+#include <rfl/yaml.hpp>
 
 #define BOOST_AUTO_TEST_MAIN
 #include <boost/test/unit_test.hpp>
@@ -242,6 +243,16 @@ BOOST_AUTO_TEST_CASE( reflectionIn )
   BOOST_CHECK_EQUAL(result->a, "x");
   BOOST_CHECK_EQUAL(result->b, "y");
   BOOST_CHECK_EQUAL(result->c, 10);
+
+}
+
+BOOST_AUTO_TEST_CASE( enumTest )
+{
+  cout << "=== enumTest ===" << endl;
+
+  enum Color { red, green, blue, yellow };
+  
+  BOOST_CHECK_EQUAL(rfl::yaml::write(green), "green");
 
 }
 
