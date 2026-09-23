@@ -37,6 +37,10 @@ public:
   static std::optional<long long> getNum(rfl::Result<DictG> result);
     // given a generic object, get a long out of it.
     
+  static std::optional<double> getDouble(const DictG &obj);
+  static std::optional<double> getDouble(rfl::Result<DictG> result);
+    // given a generic object, get a double out of it.
+    
   static std::optional<bool> getBool(const DictG &obj);
   static std::optional<bool> getBool(rfl::Result<DictG> result);
     // given a generic object, get a boolean out of it.
@@ -66,6 +70,11 @@ public:
   static std::optional<long long> getNumG(std::optional<DictG> g, const std::string &name);
   static std::optional<long long> getNum(std::optional<DictO> dict, const std::string &name);
     // get a long out of the dictionary with the property name.
+    // This is chainable.
+    
+  static std::optional<double> getDoubleG(std::optional<DictG> g, const std::string &name);
+  static std::optional<double> getDouble(std::optional<DictO> dict, const std::string &name);
+    // get a dohble out of the dictionary with the property name.
     // This is chainable.
     
   static std::optional<bool> getBoolG(std::optional<DictG> g, const std::string &name);

@@ -78,6 +78,36 @@ std::optional<long long> Dict::getNumG(std::optional<DictG> g, const std::string
   
 }
 
+std::optional<double> Dict::getDouble(std::optional<DictO> obj, const std::string &name) {
+
+  if (!obj) {
+    return std::nullopt;
+  }
+  
+  auto prop = obj->get(name);
+  if (!prop) {
+    return std::nullopt;
+  }
+  
+  return getDouble(*prop);
+  
+}
+
+std::optional<double> Dict::getDoubleG(std::optional<DictG> g, const std::string &name) {
+
+  if (!g) {
+    return std::nullopt;
+  }
+  
+  auto obj = getObject(*g);
+  if (!obj) {
+    return std::nullopt;
+  }
+  
+  return getDouble(*obj, name);
+  
+}
+
 std::optional<bool> Dict::getBool(std::optional<DictO> obj, const std::string &name) {
 
   if (!obj) {
@@ -311,6 +341,30 @@ std::optional<long long> Dict::getNum(rfl::Result<DictG> result) {
     return std::nullopt;
   }
   return getNum(*result);
+  
+}
+
+std::optional<double> Dict::getDouble(const DictG &obj) {
+
+  std::optional<double> i;
+  std::visit([&i](const auto &field) {
+  
+    if constexpr (std::is_same<std::decay_t<decltype(field)>, long>() || std::is_same<std::decay_t<decltype(field)>, double>()) {
+      i = field;
+    }
+
+  }, obj.variant());
+
+  return i;
+  
+}
+
+std::optional<double> Dict::getDouble(rfl::Result<DictG> result) {
+
+  if (!result) {
+    return std::nullopt;
+  }
+  return getDouble(*result);
   
 }
 

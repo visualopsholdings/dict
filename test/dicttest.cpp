@@ -252,5 +252,31 @@ BOOST_AUTO_TEST_CASE( getFirstKey )
 
 }
 
+BOOST_AUTO_TEST_CASE( doubleType )
+{
+  cout << "=== doubleType ===" << endl;
+  
+  auto d = dictO({{ "meaning", 42.3 }});
+  
+  auto meaning = Dict::getDouble(d, "meaning");
+  
+  BOOST_CHECK(meaning);
+  BOOST_CHECK_EQUAL(*meaning, 42.3);
+  
+}
+
+BOOST_AUTO_TEST_CASE( doubleG )
+{
+  cout << "=== doubleG ===" << endl;
+  
+  DictG d = dictO({{ "meaning", 42.3 }});
+  
+  auto meaning = Dict::getDoubleG(d, "meaning");
+  
+  BOOST_CHECK(meaning);
+  BOOST_CHECK_EQUAL(*meaning, 42.3);
+  
+}
+
 
 

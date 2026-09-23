@@ -197,6 +197,10 @@ Dict is licensed under [version 3 of the GNU General Public License] contained i
 
 - Implement includes.
 
+### 23-Sep-2026
+
+- Implement doubles.
+
 
 
 
