@@ -560,4 +560,85 @@ std::optional<std::string> Dict::getFirstKey(const DictO &d) {
   return std::nullopt;
 }
 
+std::optional<DictO> Dict::diff(const DictO &obj1, const DictO &obj2) {
+
+  std::optional<DictO> d;
+  
+  // test values for all keys in obj1.
+  for (auto i: obj1) {
+    std::optional<DictG> diffval;
+    auto s2 = Dict::getString(obj2, get<0>(i));
+    if (s2) {
+      // value is a string.
+      auto s1 = Dict::getString(obj1, get<0>(i));
+      if (s1 && *s1 == *s2) {
+        continue;
+      }
+      diffval = *s2;
+    }
+    else {
+      auto n2 = Dict::getNum(obj2, get<0>(i));
+      if (n2) {
+        auto n1 = Dict::getNum(obj1, get<0>(i));
+        if (n1 && *n1 == *n2) {
+          continue;
+        }
+        diffval = *n2;
+      }
+      else {
+        auto b2 = Dict::getBool(obj2, get<0>(i));
+        if (b2) {
+          auto b1 = Dict::getBool(obj1, get<0>(i));
+          if (b1 && *b1 == *b2) {
+              continue;
+          }
+          diffval = *b2;
+        }
+        else {
+          auto d2 = Dict::getDouble(obj2, get<0>(i));
+          if (d2) {
+            auto d1 = Dict::getDouble(obj1, get<0>(i));
+            if (d1 && *d1 == *d2) {
+              continue;
+            }
+            diffval = *d2;
+          }
+          else {
+            auto g2 = Dict::getGeneric(obj2, get<0>(i));
+            if (!g2) {
+              // only in 1.
+              diffval = *Dict::getGeneric(obj1, get<0>(i));;
+            }
+            else {
+              BOOST_LOG_TRIVIAL(warning) << "ignoring " << get<0>(i);
+            }
+          }
+        }
+      }
+    }
+    
+    // wd found a difference
+    if (diffval) {
+      if (!d) {
+        d = DictO();
+      }
+      (*d)[get<0>(i)] = *diffval;
+    }
+
+  }
+  
+  // add in all obj2 keys that aren't in obj1.
+  for (auto i: obj2) {
+    auto s1 = Dict::getGeneric(obj1, get<0>(i));
+    if (!s1) {
+      if (!d) {
+        d = DictO();
+      }
+      (*d)[get<0>(i)] = get<1>(i);
+    }
+  }
+    
+  return d;
+}
+
 

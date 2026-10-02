@@ -67,3 +67,8 @@ add_executable(IncludeTest test/includetest.cpp)
   target_link_libraries(IncludeTest DictLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
 add_test(IncludeTest IncludeTest)
+
+add_executable(DiffTest test/difftest.cpp)
+  target_link_libraries(DiffTest DictLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+
+add_test(DiffTest DiffTest)

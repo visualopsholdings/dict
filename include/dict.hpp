@@ -109,6 +109,10 @@ public:
   static std::optional<std::string> getFirstKey(const DictO &d);
     // get the ery first key of a dictionary.
     
+  static std::optional<DictO> diff(const DictO &obj1, const DictO &obj2);
+    // return the difference between 2 objects.
+    // currently is very simple, only handles 1 level and only string, bool num and double values.
+    
   // monad entry points.
   Result object(const std::string &key) {
     return Result(_dict).object(key);
