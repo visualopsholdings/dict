@@ -10,6 +10,7 @@
 */
 
 #include "dict.hpp"
+#include "stringutils.hpp"
 
 #include <rfl.hpp>
 #include <rfl/json.hpp>
@@ -641,4 +642,38 @@ std::optional<DictO> Dict::diff(const DictO &obj1, const DictO &obj2) {
   return d;
 }
 
+std::optional<std::string> Dict::getPath(const DictO &obj, const std::string &path) {
 
+  std::vector<std::string> parts;
+  StringUtils::splitString(path, '.', &parts);
+  auto o = obj;
+  for (auto i=0; i<parts.size()-1; i++) {
+    auto so = Dict::getObject(o, parts[i]);
+    if (!so) {
+      BOOST_LOG_TRIVIAL(error) << "path " << path << " not found";
+      return std::nullopt;
+    }
+    o = *so;
+  }
+  return Dict::getString(o, parts.back());
+
+}
+
+void Dict::addToPath(DictO *obj, const std::string &path, const std::string &value) {
+
+  std::vector<std::string> parts;
+  StringUtils::splitString(path, '.', &parts);
+  
+  if (parts.size() == 0) {
+    *obj = DictO();
+    return;
+  }
+  
+  auto i = parts.rbegin();
+  *obj = dictO({{ *i, value }});
+  i++;
+  for (; i != parts.rend(); i++) {
+    *obj = dictO({{ *i, *obj }});
+  }
+
+}

@@ -113,6 +113,10 @@ public:
     // return the difference between 2 objects.
     // currently is very simple, only handles 1 level and only string, bool num and double values.
     
+  static std::optional<std::string> getPath(const vops::DictO &obj, const std::string &path);
+  static void addToPath(vops::DictO *obj, const std::string &path, const std::string &value);
+    // functions that can handle dot-seperated paths.
+    
   // monad entry points.
   Result object(const std::string &key) {
     return Result(_dict).object(key);

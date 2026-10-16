@@ -30,6 +30,19 @@ else ()
   set(YAML_LIB yaml-cpp)
 endif ()
 
+# fetch from other repos.
+
+include(FetchContent)
+
+FetchContent_Declare(
+  dates
+  GIT_REPOSITORY https://github.com/visualopsholdings/dates.git
+  GIT_TAG main
+)
+FetchContent_MakeAvailable(dates)
+
+include_directories(${dates_SOURCE_DIR}/include)
+
 add_library(DictLib STATIC     
     src/dict.cpp
     src/dictptr.cpp
@@ -39,7 +52,7 @@ add_library(DictLib STATIC
   target_link_libraries(DictLib reflectcpp ${YAML_LIB} ${Boost_LOG_LIBRARY} )
 
 add_executable(DictTest test/dicttest.cpp)
-  target_link_libraries(DictTest DictLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+  target_link_libraries(DictTest DictLib DatesLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
 add_test(DictTest DictTest)
 
@@ -49,26 +62,26 @@ add_executable(ConceptTest test/concepttest.cpp)
 add_test(ConceptTest ConceptTest)
 
 add_executable(PtrTest test/ptrtest.cpp)
-  target_link_libraries(PtrTest DictLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+  target_link_libraries(PtrTest DictLib DatesLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
 add_test(PtrTest PtrTest)
 
 add_executable(MonadTest test/monadtest.cpp)
-  target_link_libraries(MonadTest DictLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+  target_link_libraries(MonadTest DictLib DatesLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
 add_test(MonadTest MonadTest)
 
 add_executable(ExpectTest test/expecttest.cpp)
-  target_link_libraries(ExpectTest DictLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+  target_link_libraries(ExpectTest DictLib DatesLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
 add_test(ExpectTest ExpectTest)
 
 add_executable(IncludeTest test/includetest.cpp)
-  target_link_libraries(IncludeTest DictLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+  target_link_libraries(IncludeTest DictLib DatesLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
 add_test(IncludeTest IncludeTest)
 
 add_executable(DiffTest test/difftest.cpp)
-  target_link_libraries(DiffTest DictLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+  target_link_libraries(DiffTest DictLib DatesLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
 add_test(DiffTest DiffTest)

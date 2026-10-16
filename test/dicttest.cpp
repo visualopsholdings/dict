@@ -278,5 +278,34 @@ BOOST_AUTO_TEST_CASE( doubleG )
   
 }
 
+BOOST_AUTO_TEST_CASE( getPath )
+{
+  cout << "=== getPath ===" << endl;
+
+  auto d = dictO({
+    { "views", dictO({
+      { "timeline", dictO({
+        { "endDate", "xxxx" }
+      }) }
+    }) }
+  });
+  auto result = Dict::getPath(d, "views.timeline.endDate");
+  BOOST_CHECK(result);
+  auto s = Dict::getString(*result);
+  BOOST_CHECK(s);
+  BOOST_CHECK_EQUAL(*s, "xxxx");
+    
+}
+
+BOOST_AUTO_TEST_CASE( addToPath )
+{
+  cout << "=== addToPath ===" << endl;
+
+  DictO d;
+  Dict::addToPath(&d, "views.timeline.endDate", "yyyy");
+//  cout << Dict::toString(d) << endl;
+  BOOST_CHECK_EQUAL(Dict(d).object("views").object("timeline").object("endDate").string(), "yyyy");
+    
+}
 
 
