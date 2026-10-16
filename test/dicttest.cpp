@@ -285,13 +285,17 @@ BOOST_AUTO_TEST_CASE( getPath )
   auto d = dictO({
     { "views", dictO({
       { "timeline", dictO({
-        { "endDate", "xxxx" }
+        { "endDate", dictO({
+          { "if", "xxxx" }
+        }) }
       }) }
     }) }
   });
   auto result = Dict::getPath(d, "views.timeline.endDate");
   BOOST_CHECK(result);
-  auto s = Dict::getString(*result);
+  auto o = Dict::getObject(*result);
+  BOOST_CHECK(o);
+  auto s = Dict::getString(*o, "if");
   BOOST_CHECK(s);
   BOOST_CHECK_EQUAL(*s, "xxxx");
     

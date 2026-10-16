@@ -642,7 +642,7 @@ std::optional<DictO> Dict::diff(const DictO &obj1, const DictO &obj2) {
   return d;
 }
 
-std::optional<std::string> Dict::getPath(const DictO &obj, const std::string &path) {
+std::optional<vops::DictG> Dict::getPath(const DictO &obj, const std::string &path) {
 
   std::vector<std::string> parts;
   StringUtils::splitString(path, '.', &parts);
@@ -655,7 +655,7 @@ std::optional<std::string> Dict::getPath(const DictO &obj, const std::string &pa
     }
     o = *so;
   }
-  return Dict::getString(o, parts.back());
+  return Dict::getGeneric(o, parts.back());
 
 }
 
