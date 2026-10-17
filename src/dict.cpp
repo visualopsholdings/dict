@@ -659,7 +659,7 @@ std::optional<vops::DictG> Dict::getPath(const DictO &obj, const std::string &pa
 
 }
 
-void Dict::addToPath(DictO *obj, const std::string &path, const std::string &value) {
+void Dict::addToPath(DictO *obj, const std::string &path, const DictG &value) {
 
   std::vector<std::string> parts;
   StringUtils::splitString(path, '.', &parts);

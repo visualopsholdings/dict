@@ -114,7 +114,7 @@ public:
     // currently is very simple, only handles 1 level and only string, bool num and double values.
     
   static std::optional<vops::DictG> getPath(const vops::DictO &obj, const std::string &path);
-  static void addToPath(vops::DictO *obj, const std::string &path, const std::string &value);
+  static void addToPath(vops::DictO *obj, const std::string &path, const vops::DictG &value);
     // functions that can handle dot-seperated paths.
     
   // monad entry points.
