@@ -22,6 +22,7 @@ set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# we might supoort YAML, but it isn/t linking properly on the pi4.
 #set(USE_YAML ON)
 
 include_directories(include)
