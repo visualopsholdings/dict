@@ -13,7 +13,9 @@
 
 #include <iostream>
 #include <rfl/json.hpp>
+#ifdef USE_YAML
 #include <rfl/yaml.hpp>
+#endif
 
 #define BOOST_AUTO_TEST_MAIN
 #include <boost/test/unit_test.hpp>
@@ -246,6 +248,7 @@ BOOST_AUTO_TEST_CASE( reflectionIn )
 
 }
 
+#ifdef USE_YAML
 BOOST_AUTO_TEST_CASE( enumTest )
 {
   cout << "=== enumTest ===" << endl;
@@ -255,4 +258,5 @@ BOOST_AUTO_TEST_CASE( enumTest )
   BOOST_CHECK_EQUAL(rfl::yaml::write(green), "green");
 
 }
+#endif
 

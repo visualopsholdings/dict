@@ -14,7 +14,9 @@
 
 #include <rfl.hpp>
 #include <rfl/json.hpp>
+#ifdef USE_YAML
 #include <rfl/yaml.hpp>
+#endif
 #include <boost/log/trivial.hpp>
 
 using namespace vops;
@@ -401,9 +403,11 @@ std::string Dict::toString(const DictG &g, bool pretty, const std::string &forma
     return rfl::json::write(g);
   }
   
+#ifdef USE_YAML
   if (format == ".yml") {
     return rfl::yaml::write(g);
   }
+#endif
 
   BOOST_LOG_TRIVIAL(error) << "invalid format " << format;
   return "???";
@@ -419,12 +423,14 @@ std::optional<DictG> Dict::parse(T &s, const std::string &format) {
       return *g;
     }
   }
+#ifdef USE_YAML
   else if (format == ".yml") {
     auto g = rfl::yaml::read<DictG>(s);
     if (g) {
       return *g;
     }
   }
+#endif
   else {
     BOOST_LOG_TRIVIAL(error) << "invalid format " << format;
     return std::nullopt;
@@ -507,12 +513,14 @@ std::optional<DictG> Dict::parseFile(const std::string &fn, bool silentinclude) 
       return resolveJSONIncludes(p.parent_path(), *g, silentinclude);
     }
   }
+#ifdef USE_YAML
   else if (p.extension() == ".yml") {
     auto g = rfl::yaml::load<DictG>(fn);
     if (g) {
       return *g;
     }
   }
+#endif
   else {
     BOOST_LOG_TRIVIAL(error) << "invalid format " << p.extension();
     return std::nullopt;
