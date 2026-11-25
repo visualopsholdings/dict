@@ -14,7 +14,7 @@ cmake_policy(SET CMP0167 NEW) # Boost
 
 project (dict)
   find_package(Boost 1.90.0 COMPONENTS unit_test_framework log REQUIRED)
-  find_package(yaml-cpp REQUIRED)
+  find_package(yaml-cpp CONFIG REQUIRED)
   add_definitions(-DBOOST_ALL_DYN_LINK) 
   enable_testing()
 
@@ -23,12 +23,6 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include_directories(include)
-
-if (APPLE)
-  set(YAML_LIB yaml-cpp::yaml-cpp)
-else ()
-  set(YAML_LIB yaml-cpp)
-endif ()
 
 # fetch from other repos.
 
@@ -49,7 +43,7 @@ add_library(DictLib STATIC
     src/dictresult.cpp
     src/expect.cpp
   )
-  target_link_libraries(DictLib reflectcpp ${YAML_LIB} ${Boost_LOG_LIBRARY} )
+  target_link_libraries(DictLib PRIVATE reflectcpp yaml-cpp::yaml-cpp ${Boost_LOG_LIBRARY} )
 
 add_executable(DictTest test/dicttest.cpp)
   target_link_libraries(DictTest DictLib DatesLib ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
