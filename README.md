@@ -200,6 +200,10 @@ Dict is licensed under [version 3 of the GNU General Public License] contained i
 
 - Implement doubles.
 
+### 27-Nov-2026
+
+- remove YAML due to cross platform library issues.
+
 
 
 
