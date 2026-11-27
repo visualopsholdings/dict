@@ -43,14 +43,13 @@ You can set extra properties, but they must be defined AFTER the "...".
 #### Linux
 
 ```
-sudo apt-get install -y git g++ gcc build-essential git make \
-  pkg-config cmake libyaml-cpp-dev
+sudo apt-get install -y git g++ gcc build-essential git make pkg-config cmake
 ```
 
 #### Mac
 
 ```
-brew install bison yaml-cpp pkg-config
+brew install bison pkg-config
 ```
 
 ### CMake
@@ -95,7 +94,7 @@ cd reflect-cpp
 git submodule update --init
 ./vcpkg/bootstrap-vcpkg.sh # Linux, macOS
 ./vcpkg/bootstrap-vcpkg.bat # Windows
-cmake -S . -B build -DCMAKE_CXX_STANDARD=20 -DCMAKE_BUILD_TYPE=Release -DREFLECTCPP_YAML=ON -DREFLECTCPP_BSON=ON
+cmake -S . -B build -DCMAKE_CXX_STANDARD=20 -DCMAKE_BUILD_TYPE=Release -DREFLECTCPP_BSON=ON
 cd build
 make -j4  CFLAGS="-DREFLECT_CPP_C_ARRAYS_OR_INHERITANCE" # Mac, Linux
 make -j4  CFLAGS="-DREFLECT_CPP_C_ARRAYS_OR_INHERITANCE" --config Release # MSVC
