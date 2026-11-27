@@ -14,7 +14,7 @@ cmake_policy(SET CMP0167 NEW) # Boost
 
 project (dict)
   find_package(Boost 1.90.0 COMPONENTS unit_test_framework log REQUIRED)
-  find_package(yaml-cpp CONFIG REQUIRED)
+#  find_package(yaml-cpp CONFIG REQUIRED)
   add_definitions(-DBOOST_ALL_DYN_LINK) 
   enable_testing()
 
@@ -27,11 +27,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include_directories(include)
 
-if (APPLE)
-  set(YAML_LIB yaml-cpp::yaml-cpp)
-else ()
-  set(YAML_LIB yaml-cpp)
-endif ()
+# if (APPLE)
+#   set(YAML_LIB yaml-cpp::yaml-cpp)
+# else ()
+#   set(YAML_LIB yaml-cpp)
+# endif ()
 
 # fetch from other repos.
 
